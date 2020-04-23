@@ -4,17 +4,17 @@ $exibicoesporpag = $row['epp'];
 $numincial = $p4 * $exibicoesporpag;
 // echo $contatos;
 
-$res1 = mysql_query("SELECT * FROM `post` where id_us in ($contatos) ORDER BY id DESC LIMIT $numincial , $exibicoesporpag");
-while($escrever1=mysql_fetch_array($res1)){
+$res1 = mysqli_query($conecta, "SELECT * FROM `post` where id_us in ($contatos) ORDER BY id DESC LIMIT $numincial , $exibicoesporpag");
+while($escrever1=mysqli_fetch_array($res1)){
 	$e = $e + 1;
-	$res = mysql_query("select * from user where id = '$escrever1[id_us]'");
-	$escrever=mysql_fetch_array($res);
+	$res = mysqli_query($conecta, "select * from user where id = '$escrever1[id_us]'");
+	$escrever=mysqli_fetch_array($res);
 	$datatempo = explode(" ", $escrever1['data']);
 	$dat = explode("-", $datatempo[0]);
-	$like = mysql_query("select * from gostar where id_post = '$escrever1[id]' and gostei = '1'");
-	$rlike = mysql_num_rows($like);
-	$nlike = mysql_query("select * from gostar where id_post = '$escrever1[id]' and gostei = '0'");
-	$rnlike = mysql_num_rows($nlike);
+	$like = mysqli_query($conecta, "select * from gostar where id_post = '$escrever1[id]' and gostei = '1'");
+	$rlike = mysqli_num_rows($like);
+	$nlike = mysqli_query($conecta, "select * from gostar where id_post = '$escrever1[id]' and gostei = '0'");
+	$rnlike = mysqli_num_rows($nlike);
 
 	echo "<div id=\"item\" style=\"min-height: 50px; margin-top: 6px; padding: 5px; background: #ffffff;\"><div style=\"min-height: 55px;\">
 	<div style=\"right: 6px; position: absolute;\">
@@ -51,8 +51,8 @@ while($escrever1=mysql_fetch_array($res1)){
  	$rp = "rpus";
  	$ar = 0;
 	echo "</div></div><div style=\"position: relative; border: 0px solid #000000; left: 55px; /*width: 520px;*/ margin-right: 55px;\">";
-	$res3 = mysql_query("SELECT * FROM `repost` where id_post = '$escrever1[id]' ORDER BY id asc LIMIT 0 , 30");
- 	while($escrever3=mysql_fetch_array($res3)){
+	$res3 = mysqli_query($conecta, "SELECT * FROM `repost` where id_post = '$escrever1[id]' ORDER BY id asc LIMIT 0 , 30");
+ 	while($escrever3=mysqli_fetch_array($res3)){
  		$i = $i + 1;
  		include ("engine/post/usrepost.php");
 	}
@@ -64,8 +64,8 @@ while($escrever1=mysql_fetch_array($res1)){
 	<input type=\"submit\" name=\"repost\" id=\"cordoinput\" value=\"Postar\">
 	</form></div></div>";
 }
-$contagemdepags = mysql_query("SELECT count(*) FROM `post` where id_us in ($contatos);");
-$rcontagemdepags = mysql_fetch_array($contagemdepags);
+$contagemdepags = mysqli_query($conecta, "SELECT count(*) FROM `post` where id_us in ($contatos);");
+$rcontagemdepags = mysqli_fetch_array($contagemdepags);
 //echo $rcontagemdepags['count(*)'];
 $cnumdepags = $rcontagemdepags['count(*)'] / $exibicoesporpag;
 $numdepags = ceil($cnumdepags);

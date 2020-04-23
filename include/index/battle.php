@@ -26,8 +26,8 @@ echo "
 
 
 if($i1 == 2){
-	$csql = mysql_query("select * from batalhas where deid = '$row[id]'");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from batalhas where deid = '$row[id]'");
+	$rsql = mysqli_fetch_array($csql);
 	$horadoservidor = mktime(date("H")-3, date("i"), date("s"), date("m"), date("d"), date("Y"));
 	if($rsql['simples'] <= $horadoservidor){
 		if($p1 == null || $p1 == 1){
@@ -37,11 +37,11 @@ if($i1 == 2){
 
 
 
-			$csql = mysql_query("SELECT * FROM user_cartas where deid = '$id' and tipo = '1';");
-		 	while($rsql=mysql_fetch_array($csql)){
+			$csql = mysqli_query($conecta, "SELECT * FROM user_cartas where deid = '$id' and tipo = '1';");
+		 	while($rsql=mysqli_fetch_array($csql)){
 		 		$cont++;
-		 		$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-		 		$rsql1 = mysql_fetch_array($csql1);
+		 		$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+		 		$rsql1 = mysqli_fetch_array($csql1);
 		 		echo "
 		 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 		 			<a href=\"index.php?battle&i1=2&p1=2&p2=" . $rsql['id'] . "\" class=\"linkus\">
@@ -64,16 +64,16 @@ if($i1 == 2){
 			</div>";
 		}
 		if($p1 == 2){
-			$csql = mysql_query("select * from user_cartas where id = '$p2';");
-			$rsql = mysql_fetch_array($csql);
-			$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-			$rsql1 = mysql_fetch_array($csql1);
-			$csql2 = mysql_query("select * from artista where id = '$rsql1[artista]';");
-			$rsql2 = mysql_fetch_array($csql2);
-			$csql3 = mysql_query("select * from est_musical where id = '$rsql1[est_musical]';");
-			$rsql3 = mysql_fetch_array($csql3);
-			$csql4 = mysql_query("select * from tip where id = '$rsql1[tip]';");
-			$rsql4 = mysql_fetch_array($csql4);
+			$csql = mysqli_query($conecta, "select * from user_cartas where id = '$p2';");
+			$rsql = mysqli_fetch_array($csql);
+			$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+			$rsql1 = mysqli_fetch_array($csql1);
+			$csql2 = mysqli_query($conecta, "select * from artista where id = '$rsql1[artista]';");
+			$rsql2 = mysqli_fetch_array($csql2);
+			$csql3 = mysqli_query($conecta, "select * from est_musical where id = '$rsql1[est_musical]';");
+			$rsql3 = mysqli_fetch_array($csql3);
+			$csql4 = mysqli_query($conecta, "select * from tip where id = '$rsql1[tip]';");
+			$rsql4 = mysqli_fetch_array($csql4);
 
 			echo "
 			<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
@@ -96,11 +96,11 @@ if($i1 == 2){
 			<span class=\"titulo\">ESCOLHA UM EFEITO</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">
 			";
 			$cont_ee = 0;
-			$csql_ee = mysql_query("SELECT * FROM user_ee where deid = '$id';");
-		 	while($rsql_ee=mysql_fetch_array($csql_ee)){
+			$csql_ee = mysqli_query($conecta, "SELECT * FROM user_ee where deid = '$id';");
+		 	while($rsql_ee=mysqli_fetch_array($csql_ee)){
 		 		$cont_ee++;
-		 		$csql_ee1 = mysql_query("select * from ee where id = '$rsql_ee[ee]';");
-		 		$rsql_ee1 = mysql_fetch_array($csql_ee1);
+		 		$csql_ee1 = mysqli_query($conecta, "select * from ee where id = '$rsql_ee[ee]';");
+		 		$rsql_ee1 = mysqli_fetch_array($csql_ee1);
 		 		echo "
 		 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 		 			<a href=\"index.php?battle&i1=2&p1=3&p2=" . $p2 . "&p3=" . $rsql_ee['id'] . "\" class=\"linkus\">
@@ -121,16 +121,16 @@ if($i1 == 2){
 			///////////////////// p2 = carta
 			///////////////////// p3 = efeito
 			///////////////////// p4 = user
-			$csql = mysql_query("select * from user_cartas where id = '$p2';");
-			$rsql = mysql_fetch_array($csql);
-			$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-			$rsql1 = mysql_fetch_array($csql1);
-			$csql2 = mysql_query("select * from artista where id = '$rsql1[artista]';");
-			$rsql2 = mysql_fetch_array($csql2);
-			$csql3 = mysql_query("select * from est_musical where id = '$rsql1[est_musical]';");
-			$rsql3 = mysql_fetch_array($csql3);
-			$csql4 = mysql_query("select * from tip where id = '$rsql1[tip]';");
-			$rsql4 = mysql_fetch_array($csql4);
+			$csql = mysqli_query($conecta, "select * from user_cartas where id = '$p2';");
+			$rsql = mysqli_fetch_array($csql);
+			$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+			$rsql1 = mysqli_fetch_array($csql1);
+			$csql2 = mysqli_query($conecta, "select * from artista where id = '$rsql1[artista]';");
+			$rsql2 = mysqli_fetch_array($csql2);
+			$csql3 = mysqli_query($conecta, "select * from est_musical where id = '$rsql1[est_musical]';");
+			$rsql3 = mysqli_fetch_array($csql3);
+			$csql4 = mysqli_query($conecta, "select * from tip where id = '$rsql1[tip]';");
+			$rsql4 = mysqli_fetch_array($csql4);
 
 			echo "
 			<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
@@ -154,12 +154,12 @@ if($i1 == 2){
 				<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 				<span class=\"titulo\">EFEITO</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">
 				";
-				$csql_ee = mysql_query("select * from user_ee where id = '$p3';");
-		 		$rsql_ee = mysql_fetch_array($csql_ee);
-			 	$csql_ee1 = mysql_query("select * from ee where id = '$rsql_ee[ee]';");
-		 		$rsql_ee1 = mysql_fetch_array($csql_ee1);
-				$csql_ee2 = mysql_query("select * from tip where id = '$rsql_ee1[tip]';");
-				$rsql_ee2 = mysql_fetch_array($csql_ee2);
+				$csql_ee = mysqli_query($conecta, "select * from user_ee where id = '$p3';");
+		 		$rsql_ee = mysqli_fetch_array($csql_ee);
+			 	$csql_ee1 = mysqli_query($conecta, "select * from ee where id = '$rsql_ee[ee]';");
+		 		$rsql_ee1 = mysqli_fetch_array($csql_ee1);
+				$csql_ee2 = mysqli_query($conecta, "select * from tip where id = '$rsql_ee1[tip]';");
+				$rsql_ee2 = mysqli_fetch_array($csql_ee2);
 				echo "
 				<span class=\"texto\">
 					<img src=\"cartas/" . $rsql_ee1['imagem'] . "\" width=\"200\" height=\"200\" align=\"left\" class=\"pr1\">
@@ -175,10 +175,10 @@ if($i1 == 2){
 			<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			<span class=\"titulo\">ALVO</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">
 			";
-			$csql_con = mysql_query("SELECT * FROM `contato` where deid = '$id'");
-			while($rsql_con=mysql_fetch_array($csql_con)){
-				$csql_con1 = mysql_query("SELECT * FROM user WHERE id='$rsql_con[cotid]'");
-				$rsql_con1 = mysql_fetch_array($csql_con1);
+			$csql_con = mysqli_query($conecta, "SELECT * FROM `contato` where deid = '$id'");
+			while($rsql_con=mysqli_fetch_array($csql_con)){
+				$csql_con1 = mysqli_query($conecta, "SELECT * FROM user WHERE id='$rsql_con[cotid]'");
+				$rsql_con1 = mysqli_fetch_array($csql_con1);
 			echo "
 			<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 				<a href=\"index.php?battle&i1=2&p1=4&p2=" . $p2 . "&p3=" . $p3 . "&p4=" . $rsql_con['cotid'] . "\"><img src=\"fotos/" . $rsql_con1['foto'] . "\" width=\"143\" height=\"150\"></a>
@@ -186,7 +186,7 @@ if($i1 == 2){
 			</div>
 			";
 			}
-			if (mysql_num_rows($csql_con) <= 0){
+			if (mysqli_num_rows($csql_con) <= 0){
 			echo "<center><span class=\"titulo\">A lista de contatos está vazia</span></center>";
 			}
 			echo "
@@ -202,16 +202,16 @@ if($i1 == 2){
 			echo "
 			<form action=\"index.php?battle&i1=2&p1=5\" method=\"post\">
 			";
-			$csql = mysql_query("select * from user_cartas where id = '$p2';");
-			$rsql = mysql_fetch_array($csql);
-			$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-			$rsql1 = mysql_fetch_array($csql1);
-			$csql2 = mysql_query("select * from artista where id = '$rsql1[artista]';");
-			$rsql2 = mysql_fetch_array($csql2);
-			$csql3 = mysql_query("select * from est_musical where id = '$rsql1[est_musical]';");
-			$rsql3 = mysql_fetch_array($csql3);
-			$csql4 = mysql_query("select * from tip where id = '$rsql1[tip]';");
-			$rsql4 = mysql_fetch_array($csql4);
+			$csql = mysqli_query($conecta, "select * from user_cartas where id = '$p2';");
+			$rsql = mysqli_fetch_array($csql);
+			$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+			$rsql1 = mysqli_fetch_array($csql1);
+			$csql2 = mysqli_query($conecta, "select * from artista where id = '$rsql1[artista]';");
+			$rsql2 = mysqli_fetch_array($csql2);
+			$csql3 = mysqli_query($conecta, "select * from est_musical where id = '$rsql1[est_musical]';");
+			$rsql3 = mysqli_fetch_array($csql3);
+			$csql4 = mysqli_query($conecta, "select * from tip where id = '$rsql1[tip]';");
+			$rsql4 = mysqli_fetch_array($csql4);
 
 			echo "
 			<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
@@ -240,12 +240,12 @@ if($i1 == 2){
 				<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 				<span class=\"titulo\">EFEITO</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">
 				";
-				$csql_ee = mysql_query("select * from user_ee where id = '$p3';");
-		 		$rsql_ee = mysql_fetch_array($csql_ee);
-			 	$csql_ee1 = mysql_query("select * from ee where id = '$rsql_ee[ee]';");
-		 		$rsql_ee1 = mysql_fetch_array($csql_ee1);
-				$csql_ee2 = mysql_query("select * from tip where id = '$rsql_ee1[tip]';");
-				$rsql_ee2 = mysql_fetch_array($csql_ee2);
+				$csql_ee = mysqli_query($conecta, "select * from user_ee where id = '$p3';");
+		 		$rsql_ee = mysqli_fetch_array($csql_ee);
+			 	$csql_ee1 = mysqli_query($conecta, "select * from ee where id = '$rsql_ee[ee]';");
+		 		$rsql_ee1 = mysqli_fetch_array($csql_ee1);
+				$csql_ee2 = mysqli_query($conecta, "select * from tip where id = '$rsql_ee1[tip]';");
+				$rsql_ee2 = mysqli_fetch_array($csql_ee2);
 				echo "
 				<span class=\"texto\">
 					<img src=\"cartas/" . $rsql_ee1['imagem'] . "\" width=\"200\" height=\"200\" align=\"left\" class=\"pr1\">
@@ -261,10 +261,10 @@ if($i1 == 2){
 			<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			<span class=\"titulo\">ALVO</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">
 			";
-			$csql_con1 = mysql_query("SELECT * FROM user WHERE id='$p4'");
-			$rsql_con1 = mysql_fetch_array($csql_con1);
-			$csql_con2 = mysql_query("select * from perfil where id = '$p4';");
-			$rsql_con2 = mysql_fetch_array($csql_con2);
+			$csql_con1 = mysqli_query($conecta, "SELECT * FROM user WHERE id='$p4'");
+			$rsql_con1 = mysqli_fetch_array($csql_con1);
+			$csql_con2 = mysqli_query($conecta, "select * from perfil where id = '$p4';");
+			$rsql_con2 = mysqli_fetch_array($csql_con2);
 			echo "
 				<img src=\"fotos/" . $rsql_con1['foto'] . "\" width=\"250\" height=\"250\" align=\"left\" class=\"pr1\">
 				<div align=\"left\">
@@ -301,36 +301,36 @@ if($i1 == 2){
 			$user = $class->antisql($_POST["user"]);
 			$tipo = $class->antisql($_POST["tipo"]);
 			$hora_do_servidor = mktime(date("H")-3, date("i"), date("s"), date("m"), date("d"), date("Y"));
-			$verifica_se_possui_registro = mysql_query("select * from batalhas deid = '$id'");
-			if(mysql_num_rows($verifica_se_possui_registro) <= 0){
-				$verifica_se_possui_registro = mysql_query("insert into batalhas values('$id', '$hora_do_servidor', '$hora_do_servidor')");
+			$verifica_se_possui_registro = mysqli_query($conecta, "select * from batalhas deid = '$id'");
+			if(mysqli_num_rows($verifica_se_possui_registro) <= 0){
+				$verifica_se_possui_registro = mysqli_query($conecta, "insert into batalhas values('$id', '$hora_do_servidor', '$hora_do_servidor')");
 			}
 			$novo_horario_simples = $hora_do_servidor + $engine->tempo_batalha_simples;
 
 			echo "
 			<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			";
-			$verificar_carta = mysql_query("select * from user_cartas where id = '$carta' and deid='$id'");
-			$verificar_efeito = mysql_query("select * from user_ee where id = '$efeito' and deid='$id'");
-			$rverificar_carta = mysql_fetch_array($verificar_carta);
-			$rverificar_efeito = mysql_fetch_array($verificar_efeito);
+			$verificar_carta = mysqli_query($conecta, "select * from user_cartas where id = '$carta' and deid='$id'");
+			$verificar_efeito = mysqli_query($conecta, "select * from user_ee where id = '$efeito' and deid='$id'");
+			$rverificar_carta = mysqli_fetch_array($verificar_carta);
+			$rverificar_efeito = mysqli_fetch_array($verificar_efeito);
 			if($id != $user){		
 				if($rverificar_carta != null){
 					if($rverificar_efeito != null || $efeito == 0){
 						if($tipo == 1){/////ataque
-							$verificar_se_possui_carta = mysql_query("select count(*) from user_cartas where deid = '$user' and tipo != '3'");
-							$rverificar_se_possui_carta = mysql_fetch_array($verificar_se_possui_carta);
+							$verificar_se_possui_carta = mysqli_query($conecta, "select count(*) from user_cartas where deid = '$user' and tipo != '3'");
+							$rverificar_se_possui_carta = mysqli_fetch_array($verificar_se_possui_carta);
 							if($rverificar_se_possui_carta['count(*)'] != 0){
-								$verificar_se_possui_carta_defesa = mysql_query("select count(*) from user_cartas where deid = '$user' and tipo = '2'");
-								$rverificar_se_possui_carta_defesa = mysql_fetch_array($verificar_se_possui_carta_defesa);
+								$verificar_se_possui_carta_defesa = mysqli_query($conecta, "select count(*) from user_cartas where deid = '$user' and tipo = '2'");
+								$rverificar_se_possui_carta_defesa = mysqli_fetch_array($verificar_se_possui_carta_defesa);
 								if($rverificar_se_possui_carta_defesa['count(*)'] != 0){
 
 									/////////////////////se possuir carta de defesa
 
 									$carta_atacada = rand(1, $rverificar_se_possui_carta_defesa['count(*)']);
 									$rverificar_se_possui_carta_defesa_cont = 0;
-									$verificar_se_possui_carta_defesa1 = mysql_query("select * from user_cartas where deid = '$user' and tipo = '2'");
-									while($rverificar_se_possui_carta_defesa1 = mysql_fetch_array($verificar_se_possui_carta_defesa1)){
+									$verificar_se_possui_carta_defesa1 = mysqli_query($conecta, "select * from user_cartas where deid = '$user' and tipo = '2'");
+									while($rverificar_se_possui_carta_defesa1 = mysqli_fetch_array($verificar_se_possui_carta_defesa1)){
 										$rverificar_se_possui_carta_defesa_cont++;
 										if($rverificar_se_possui_carta_defesa_cont == $carta_atacada){
 											$carta_atacada_id = $rverificar_se_possui_carta_defesa1['id'];
@@ -346,8 +346,8 @@ if($i1 == 2){
 
 									$carta_atacada = rand(1, $rverificar_se_possui_carta['count(*)']);
 									$rverificar_se_possui_carta_cont = 0;
-									$verificar_se_possui_carta1 = mysql_query("select * from user_cartas where deid = '$user' and tipo != '3'");
-									while($rverificar_se_possui_carta1 = mysql_fetch_array($verificar_se_possui_carta1)){
+									$verificar_se_possui_carta1 = mysqli_query($conecta, "select * from user_cartas where deid = '$user' and tipo != '3'");
+									while($rverificar_se_possui_carta1 = mysqli_fetch_array($verificar_se_possui_carta1)){
 										$rverificar_se_possui_carta_cont++;
 										if($rverificar_se_possui_carta_cont == $carta_atacada){
 											$carta_atacada_id = $rverificar_se_possui_carta1['id'];
@@ -358,14 +358,14 @@ if($i1 == 2){
 								}
 
 								////////////////possuindo o id das duas cartas vamos a comparacao
-								$seleciona_carta_ataque = mysql_query("select * from user_cartas where id = '$carta'");
-								$rseleciona_carta_ataque = mysql_fetch_array($seleciona_carta_ataque);
-								$seleciona_carta_ataque1 = mysql_query("select * from cartas where id = '$rseleciona_carta_ataque[carta]'");
-								$rseleciona_carta_ataque1 = mysql_fetch_array($seleciona_carta_ataque1);
-								$seleciona_carta_defesa = mysql_query("select * from user_cartas where id = '$carta_atacada_id'");
-								$rseleciona_carta_defesa = mysql_fetch_array($seleciona_carta_defesa);
-								$seleciona_carta_defesa1 = mysql_query("select * from cartas where id = '$rseleciona_carta_defesa[carta]'");
-								$rseleciona_carta_defesa1 = mysql_fetch_array($seleciona_carta_defesa1);
+								$seleciona_carta_ataque = mysqli_query($conecta, "select * from user_cartas where id = '$carta'");
+								$rseleciona_carta_ataque = mysqli_fetch_array($seleciona_carta_ataque);
+								$seleciona_carta_ataque1 = mysqli_query($conecta, "select * from cartas where id = '$rseleciona_carta_ataque[carta]'");
+								$rseleciona_carta_ataque1 = mysqli_fetch_array($seleciona_carta_ataque1);
+								$seleciona_carta_defesa = mysqli_query($conecta, "select * from user_cartas where id = '$carta_atacada_id'");
+								$rseleciona_carta_defesa = mysqli_fetch_array($seleciona_carta_defesa);
+								$seleciona_carta_defesa1 = mysqli_query($conecta, "select * from cartas where id = '$rseleciona_carta_defesa[carta]'");
+								$rseleciona_carta_defesa1 = mysqli_fetch_array($seleciona_carta_defesa1);
 								if($comparar == 1){
 									$pts_carta_ataque = $rseleciona_carta_ataque1['qtd_vendas'];
 									$pts_carta_defesa = $rseleciona_carta_defesa1['qtd_vendas'];
@@ -379,10 +379,10 @@ if($i1 == 2){
 									$pts_carta_defesa = $rseleciona_carta_defesa1['qtd_fas'];
 								}
 								if($efeito != 0){
-									$seleciona_efeito = mysql_query("select * from user_ee where id = '$efeito'");
-									$rseleciona_efeito = mysql_fetch_array($seleciona_efeito);
-									$seleciona_efeito1 = mysql_query("select * from ee where id = '$rseleciona_efeito[ee]'");
-									$rseleciona_efeito1 = mysql_fetch_array($seleciona_efeito1);
+									$seleciona_efeito = mysqli_query($conecta, "select * from user_ee where id = '$efeito'");
+									$rseleciona_efeito = mysqli_fetch_array($seleciona_efeito);
+									$seleciona_efeito1 = mysqli_query($conecta, "select * from ee where id = '$rseleciona_efeito[ee]'");
+									$rseleciona_efeito1 = mysqli_fetch_array($seleciona_efeito1);
 									if($rseleciona_efeito1['tip'] == $rseleciona_carta_ataque1['tip']){
 										$pts_carta_ataque = $pts_carta_ataque * (1 + ($rseleciona_efeito1['ganho'] / 100));
 									}
@@ -394,11 +394,11 @@ if($i1 == 2){
 								if($pts_carta_ataque > $pts_carta_defesa){
 									$pts_ganho = $row['pts'] + (($pts_carta_ataque - $pts_carta_defesa) * ($engine->porcentagem_entre_cartas / 100));
 									$pts_ganho1 = (($pts_carta_ataque - $pts_carta_defesa) * ($engine->porcentagem_entre_cartas / 100));
-									$insert = mysql_query("UPDATE user_cartas SET tipo = '0', deid = '$id' WHERE id = '$carta_atacada_id';");
-									$insert = mysql_query("UPDATE user SET pts = '$pts_ganho' WHERE id = '$id';");
-									$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE user_cartas SET tipo = '0', deid = '$id' WHERE id = '$carta_atacada_id';");
+									$insert = mysqli_query($conecta, "UPDATE user SET pts = '$pts_ganho' WHERE id = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 									$res = 1;
-									$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
+									$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
 									if($insert){
 										echo "<script>alert('Você ganhou!');window.location='index.php?relatorio'</script>";
 									}else{ 
@@ -408,10 +408,10 @@ if($i1 == 2){
 								if($pts_carta_ataque == $pts_carta_defesa){
 									$pts_ganho = $row['pts'] + $engine->pontuacao_base;
 									$pts_ganho1 = $engine->pontuacao_base;
-									$insert = mysql_query("UPDATE user SET pts = '$pts_ganho' WHERE id = '$id';");
-									$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE user SET pts = '$pts_ganho' WHERE id = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 									$res = 2;
-									$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
+									$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
 									if($insert){
 										echo "<script>alert('Empate!');window.location='index.php?relatorio'</script>";
 									}else{ 
@@ -420,10 +420,10 @@ if($i1 == 2){
 								}
 								if($pts_carta_ataque < $pts_carta_defesa){
 									$pts_ganho1 = 0;
-									$insert = mysql_query("UPDATE user_cartas SET tipo = '0', deid = '$user' WHERE id = '$carta';");
-									$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE user_cartas SET tipo = '0', deid = '$user' WHERE id = '$carta';");
+									$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 									$res = 3;
-									$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
+									$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
 									if($insert){
 										echo "<script>alert('Você perdeu!');window.location='index.php?relatorio'</script>";
 									}else{ 
@@ -434,10 +434,10 @@ if($i1 == 2){
 							}else{
 								$pts_ganho = $row['pts'] + $engine->pontuacao_base;
 								$pts_ganho1 = $engine->pontuacao_base;
-								$insert = mysql_query("UPDATE user SET pts = '$pts_ganho' WHERE id = '$id';");
-								$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+								$insert = mysqli_query($conecta, "UPDATE user SET pts = '$pts_ganho' WHERE id = '$id';");
+								$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 								$res = 4;
-								$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
+								$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', null, '$hora_do_servidor');");
 								if($insert){
 									echo "<script>alert('O jogador atacado não possuia cartas!');window.location='index.php?relatorio'</script>";
 								}else{ 
@@ -455,19 +455,19 @@ if($i1 == 2){
 
 						//////////////////////////////////////////////////////////assalto
 						if($tipo == 2){
-							$verificar_se_possui_carta = mysql_query("select count(*) from user_cartas where deid = '$user' and tipo != '3'");
-							$rverificar_se_possui_carta = mysql_fetch_array($verificar_se_possui_carta);
+							$verificar_se_possui_carta = mysqli_query($conecta, "select count(*) from user_cartas where deid = '$user' and tipo != '3'");
+							$rverificar_se_possui_carta = mysqli_fetch_array($verificar_se_possui_carta);
 							if($rverificar_se_possui_carta['count(*)'] != 0){
-								$verificar_se_possui_carta_defesa = mysql_query("select count(*) from user_cartas where deid = '$user' and tipo = '2'");
-								$rverificar_se_possui_carta_defesa = mysql_fetch_array($verificar_se_possui_carta_defesa);
+								$verificar_se_possui_carta_defesa = mysqli_query($conecta, "select count(*) from user_cartas where deid = '$user' and tipo = '2'");
+								$rverificar_se_possui_carta_defesa = mysqli_fetch_array($verificar_se_possui_carta_defesa);
 								if($rverificar_se_possui_carta_defesa['count(*)'] != 0){
 
 									/////////////////////se possuir carta de defesa
 
 									$carta_atacada = rand(1, $rverificar_se_possui_carta_defesa['count(*)']);
 									$rverificar_se_possui_carta_defesa_cont = 0;
-									$verificar_se_possui_carta_defesa1 = mysql_query("select * from user_cartas where deid = '$user' and tipo = '2'");
-									while($rverificar_se_possui_carta_defesa1 = mysql_fetch_array($verificar_se_possui_carta_defesa1)){
+									$verificar_se_possui_carta_defesa1 = mysqli_query($conecta, "select * from user_cartas where deid = '$user' and tipo = '2'");
+									while($rverificar_se_possui_carta_defesa1 = mysqli_fetch_array($verificar_se_possui_carta_defesa1)){
 										$rverificar_se_possui_carta_defesa_cont++;
 										if($rverificar_se_possui_carta_defesa_cont == $carta_atacada){
 											$carta_atacada_id = $rverificar_se_possui_carta_defesa1['id'];
@@ -483,8 +483,8 @@ if($i1 == 2){
 
 									$carta_atacada = rand(1, $rverificar_se_possui_carta['count(*)']);
 									$rverificar_se_possui_carta_cont = 0;
-									$verificar_se_possui_carta1 = mysql_query("select * from user_cartas where deid = '$user' and tipo != '3'");
-									while($rverificar_se_possui_carta1 = mysql_fetch_array($verificar_se_possui_carta1)){
+									$verificar_se_possui_carta1 = mysqli_query($conecta, "select * from user_cartas where deid = '$user' and tipo != '3'");
+									while($rverificar_se_possui_carta1 = mysqli_fetch_array($verificar_se_possui_carta1)){
 										$rverificar_se_possui_carta_cont++;
 										if($rverificar_se_possui_carta_cont == $carta_atacada){
 											$carta_atacada_id = $rverificar_se_possui_carta1['id'];
@@ -495,14 +495,14 @@ if($i1 == 2){
 								}
 
 								////////////////possuindo o id das duas cartas vamos a comparacao
-								$seleciona_carta_ataque = mysql_query("select * from user_cartas where id = '$carta'");
-								$rseleciona_carta_ataque = mysql_fetch_array($seleciona_carta_ataque);
-								$seleciona_carta_ataque1 = mysql_query("select * from cartas where id = '$rseleciona_carta_ataque[carta]'");
-								$rseleciona_carta_ataque1 = mysql_fetch_array($seleciona_carta_ataque1);
-								$seleciona_carta_defesa = mysql_query("select * from user_cartas where id = '$carta_atacada_id'");
-								$rseleciona_carta_defesa = mysql_fetch_array($seleciona_carta_defesa);
-								$seleciona_carta_defesa1 = mysql_query("select * from cartas where id = '$rseleciona_carta_defesa[carta]'");
-								$rseleciona_carta_defesa1 = mysql_fetch_array($seleciona_carta_defesa1);
+								$seleciona_carta_ataque = mysqli_query($conecta, "select * from user_cartas where id = '$carta'");
+								$rseleciona_carta_ataque = mysqli_fetch_array($seleciona_carta_ataque);
+								$seleciona_carta_ataque1 = mysqli_query($conecta, "select * from cartas where id = '$rseleciona_carta_ataque[carta]'");
+								$rseleciona_carta_ataque1 = mysqli_fetch_array($seleciona_carta_ataque1);
+								$seleciona_carta_defesa = mysqli_query($conecta, "select * from user_cartas where id = '$carta_atacada_id'");
+								$rseleciona_carta_defesa = mysqli_fetch_array($seleciona_carta_defesa);
+								$seleciona_carta_defesa1 = mysqli_query($conecta, "select * from cartas where id = '$rseleciona_carta_defesa[carta]'");
+								$rseleciona_carta_defesa1 = mysqli_fetch_array($seleciona_carta_defesa1);
 								if($comparar == 1){
 									$pts_carta_ataque = $rseleciona_carta_ataque1['qtd_vendas'];
 									$pts_carta_defesa = $rseleciona_carta_defesa1['qtd_vendas'];
@@ -516,10 +516,10 @@ if($i1 == 2){
 									$pts_carta_defesa = $rseleciona_carta_defesa1['qtd_fas'];
 								}
 								if($efeito != 0){
-									$seleciona_efeito = mysql_query("select * from user_ee where id = '$efeito'");
-									$rseleciona_efeito = mysql_fetch_array($seleciona_efeito);
-									$seleciona_efeito1 = mysql_query("select * from ee where id = '$rseleciona_efeito[ee]'");
-									$rseleciona_efeito1 = mysql_fetch_array($seleciona_efeito1);
+									$seleciona_efeito = mysqli_query($conecta, "select * from user_ee where id = '$efeito'");
+									$rseleciona_efeito = mysqli_fetch_array($seleciona_efeito);
+									$seleciona_efeito1 = mysqli_query($conecta, "select * from ee where id = '$rseleciona_efeito[ee]'");
+									$rseleciona_efeito1 = mysqli_fetch_array($seleciona_efeito1);
 									if($rseleciona_efeito1['tip'] == $rseleciona_carta_ataque1['tip']){
 										$pts_carta_ataque = $pts_carta_ataque * (1 + ($rseleciona_efeito1['ganho'] / 100));
 									}
@@ -533,10 +533,10 @@ if($i1 == 2){
 									$pts_ganho1 = (($pts_carta_ataque - $pts_carta_defesa) * ($engine->porcentagem_entre_cartas / 100));
 									$cash_ganho = $row['cash'] + ($pts_carta_ataque - $pts_carta_defesa) + $engine->bonus_de_cash;
 									$cash_ganho1 = ($pts_carta_ataque - $pts_carta_defesa) + $engine->bonus_de_cash;
-									$insert = mysql_query("UPDATE user SET pts = '$pts_ganho', cash = '$cash_ganho' WHERE id = '$id';");
-									$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE user SET pts = '$pts_ganho', cash = '$cash_ganho' WHERE id = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 									$res = 5;
-									$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
+									$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
 									if($insert){
 										echo "<script>alert('Você ganhou!');window.location='index.php?relatorio'</script>";
 									}else{ 
@@ -548,10 +548,10 @@ if($i1 == 2){
 									$pts_ganho1 = $engine->pontuacao_base;
 									$cash_ganho = $row['cash'] + $engine->bonus_de_cash;
 									$cash_ganho1 = $engine->bonus_de_cash;
-									$insert = mysql_query("UPDATE user SET pts = '$pts_ganho', cash = '$cash_ganho' WHERE id = '$id';");
-									$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE user SET pts = '$pts_ganho', cash = '$cash_ganho' WHERE id = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 									$res = 6;
-									$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
+									$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
 									if($insert){
 										echo "<script>alert('Empate!');window.location='index.php?relatorio'</script>";
 									}else{ 
@@ -561,9 +561,9 @@ if($i1 == 2){
 								if($pts_carta_ataque < $pts_carta_defesa){
 									$pts_ganho1 = 0;
 									$cash_ganho1 = 0;
-									$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+									$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 									$res = 7;
-									$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
+									$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
 									if($insert){
 										echo "<script>alert('Você perdeu!');window.location='index.php?relatorio'</script>";
 									}else{ 
@@ -576,10 +576,10 @@ if($i1 == 2){
 								$pts_ganho1 = $engine->pontuacao_base;
 								$cash_ganho = $row['cash'] + $engine->bonus_de_cash;
 								$cash_ganho1 = $engine->bonus_de_cash;
-								$insert = mysql_query("UPDATE user SET pts = '$pts_ganho', cash = '$cash_ganho' WHERE id = '$id';");
-								$insert = mysql_query("UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
+								$insert = mysqli_query($conecta, "UPDATE user SET pts = '$pts_ganho', cash = '$cash_ganho' WHERE id = '$id';");
+								$insert = mysqli_query($conecta, "UPDATE batalhas SET simples = '$novo_horario_simples' WHERE deid = '$id';");
 								$res = 8;
-								$insert = mysql_query("insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
+								$insert = mysqli_query($conecta, "insert into rel values (null, '$id', '$user', '$res', '$pts_carta_ataque', '$pts_carta_defesa', '$pts_ganho1', '$cash_ganho1', '$hora_do_servidor');");
 								if($insert){
 									echo "<script>alert('O jogador atacado não possuia cartas!');window.location='index.php?relatorio'</script>";
 								}else{ 
@@ -612,28 +612,28 @@ if($i1 == 2){
 
 if($i1 == 3){
 	$hora_do_servidor = mktime(date("H")-3, date("i"), date("s"), date("m"), date("d"), date("Y"));
-	$verifica_se_possui_registro = mysql_query("select * from batalhas deid = '$id'");
-	if(mysql_num_rows($verifica_se_possui_registro) <= 0){
-		$verifica_se_possui_registro = mysql_query("insert into batalhas values('$id', '$hora_do_servidor', '$hora_do_servidor')");
+	$verifica_se_possui_registro = mysqli_query($conecta, "select * from batalhas deid = '$id'");
+	if(mysqli_num_rows($verifica_se_possui_registro) <= 0){
+		$verifica_se_possui_registro = mysqli_query($conecta, "insert into batalhas values('$id', '$hora_do_servidor', '$hora_do_servidor')");
 	}
-	$csql = mysql_query("select * from batalhas where deid = '$row[id]'");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from batalhas where deid = '$row[id]'");
+	$rsql = mysqli_fetch_array($csql);
 	$novo_horario_completo = $hora_do_servidor + $engine->tempo_batalha_completa;
 	if($rsql['completa'] <= $hora_do_servidor){
-		$verificar_se_possui_carta = mysql_query("select * from user_cartas where deid = '$id';");
-		if(mysql_num_rows($verificar_se_possui_carta) > 0){
-			$csql_cartas = mysql_query("select * from user_cartas where deid = '$id';");
-			while($rsql_cartas = mysql_fetch_array($csql_cartas)){
-				$csql_cartas1 = mysql_query("select * from cartas where id = '$rsql_cartas[carta]';");
-				$rsql_cartas1 = mysql_fetch_array($csql_cartas1);
+		$verificar_se_possui_carta = mysqli_query($conecta, "select * from user_cartas where deid = '$id';");
+		if(mysqli_num_rows($verificar_se_possui_carta) > 0){
+			$csql_cartas = mysqli_query($conecta, "select * from user_cartas where deid = '$id';");
+			while($rsql_cartas = mysqli_fetch_array($csql_cartas)){
+				$csql_cartas1 = mysqli_query($conecta, "select * from cartas where id = '$rsql_cartas[carta]';");
+				$rsql_cartas1 = mysqli_fetch_array($csql_cartas1);
 				$bonus_cash = $bonus_cash + ($rsql_cartas1['valor'] * ($engine->porcentagem_ganho_cartas_cash / 100));
 				$bonus_pts = $bonus_pts + ($rsql_cartas1['valor'] * ($engine->porcentagem_ganho_cartas_pts / 100));
 			}
 			$nova_cash = $row['cash'] + $bonus_cash;
 			$novo_pts = $row['pts'] + $bonus_pts;
-			$insert = mysql_query("update user set cash = '$nova_cash', pts = '$novo_pts' where id = '$id';");
+			$insert = mysqli_query($conecta, "update user set cash = '$nova_cash', pts = '$novo_pts' where id = '$id';");
 		}
-		$insert = mysql_query("UPDATE batalhas SET completa = '$novo_horario_completo' WHERE deid = '$id';");
+		$insert = mysqli_query($conecta, "UPDATE batalhas SET completa = '$novo_horario_completo' WHERE deid = '$id';");
 		if($insert){
 			echo "<script>alert('Bonus coletado!\\nBonus ganho (cash): " . $bonus_cash . "\\nBonus ganho (pts): " . $bonus_pts . "');window.location='index.php?index'</script>";
 		}else{

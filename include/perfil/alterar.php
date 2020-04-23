@@ -11,7 +11,7 @@ if(isset($_POST["cadastrar"])) {
 
 		
 			
-			$insert = mysql_query("update user set nome = '$nome', sobrenome = '$sobrenome', email = '$email' where id = '$id';") or die(mysql_error()); // Insiro os dados no BD
+			$insert = mysqli_query($conecta, "update user set nome = '$nome', sobrenome = '$sobrenome', email = '$email' where id = '$id';") or die(mysqli_error()); // Insiro os dados no BD
 			
 			if($insert) { // Verifico se a query foi executada com sucesso. Se sim, define mensagem de sucesso.
 				

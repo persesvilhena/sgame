@@ -7,8 +7,8 @@ echo"
 
 
 
-		$csql = mysql_query("SELECT * FROM cartas;");
-	 	while($rsql=mysql_fetch_array($csql)){
+		$csql = mysqli_query($conecta, "SELECT * FROM cartas;");
+	 	while($rsql=mysqli_fetch_array($csql)){
 	 		$cont++;
 
 	 		echo "

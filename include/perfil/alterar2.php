@@ -1,7 +1,7 @@
 <?php
-$verperfil = mysql_query("SELECT * FROM perfil WHERE id='$row[id]'");
-if (mysql_num_rows($verperfil) == 0){
-mysql_query("insert into perfil values($row[id],null,null,null,null,null,null,null,null,null)");
+$verperfil = mysqli_query($conecta, "SELECT * FROM perfil WHERE id='$row[id]'");
+if (mysqli_num_rows($verperfil) == 0){
+mysqli_query($conecta, "insert into perfil values($row[id],null,null,null,null,null,null,null,null,null)");
 }
 $mensagem_erro = "";
 if(isset($_POST["cadastrar"])) { 	
@@ -16,7 +16,7 @@ $estado = $class->antisql($_POST["estado"]);
 $regiao = $class->antisql($_POST["regiao"]);
 $pais = $class->antisql($_POST["pais"]);
 
-$insert = mysql_query("update perfil set data_nasc = '$data_nasc', telefone = '$telefone', telefone2 = '$telefone2', descricao1 = '$descricao1', descricao2 = '$descricao2', descricao1 = '$descricao1', cidade = '$cidade', estado = '$estado', regiao = '$regiao', pais = '$pais' where id = '$id';") or die(mysql_error());
+$insert = mysqli_query($conecta, "update perfil set data_nasc = '$data_nasc', telefone = '$telefone', telefone2 = '$telefone2', descricao1 = '$descricao1', descricao2 = '$descricao2', descricao1 = '$descricao1', cidade = '$cidade', estado = '$estado', regiao = '$regiao', pais = '$pais' where id = '$id';") or die(mysqli_error());
 if($insert) {
 	$mensagem_erro = "<script>alert('Dados alterados com sucesso!');window.location='index.php?perfil';</script>";
 }		

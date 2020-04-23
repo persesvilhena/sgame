@@ -1,36 +1,52 @@
 <?php 
 include("engine/conexao.php"); 
 
+
 session_start();
-if(!empty($_SESSION["login"]) && !empty($_SESSION["senha"]) && !empty($_SESSION["id"])) {
+if(!empty($_SESSION["login"]) && !empty($_SESSION["senha"]) && !empty($_SESSION["id"])) { // Verifico se já existem os cookies de login. Caso existam, redirecionam o user para a página restrita
 	header("Location: index.php?index");
 	exit();
 }
-
-
-if(isset($_POST["logar"])) {
-	if(!empty($_POST["login"]) && !empty($_POST["senha"])) {
-		$login = $class->antisql($_POST["login"]);
-		$senha = $class->antisql($_POST["senha"]);
-		$senha_md5 = md5($senha);
-		$valida_user = mysql_query("SELECT * FROM $tabela WHERE login='$login' AND senha='$senha_md5'") or die(mysql_error());
-		if(mysql_num_rows($valida_user) > 0) {
-			$info = mysql_fetch_array($valida_user);
-			$login = $info["login"];
-			$pass = $info["senha"];
-			$id_generico = $info["id"];
-			$id = base64_encode($id_generico);
-			$_SESSION["login"] = $login;
-			$_SESSION["senha"] = $senha_md5;
-			$_SESSION["id"] = $id;
+if(isset($_POST["logar"])) { // Verifico se o botão de login foi acionado
+	if(!empty($_POST["login"]) && !empty($_POST["senha"])) { // Verifico se os campos foram preenchidos
+		$login = $class->antisql($_POST["login"]); // Filtro os dados de login name originados do formulário
+		$senha = $class->antisql($_POST["senha"]); // Filtro a senha originada do formulário
+		$senha_md5 = md5($senha); // Codifico a senha inserida para consulta ao SQL
+		$valida_user = mysqli_query($conecta, "SELECT * FROM $tabela WHERE login='$login' AND senha='$senha_md5'") or die(mysqli_error()); // Faço a consulta ao SQL para buscar o usuário com os dados informados pelo form
+		if(mysqli_num_rows($valida_user) > 0) { // Verifico se a consulta retorna alguma linha
+			$lembrar = $_POST["lembrar"]; // Pego o valor do checkbox 'Lembrar' do formulário
+			$info = mysqli_fetch_array($valida_user); // Defino a var responsável por trazer as informações do BD
+			$login = $info["login"]; // Recupero o campo nome do BD
+			$pass = $info["senha"]; // Recupero o campo senha do BD
+			$id_generico = $info["id"]; // Recupero o campo id do BD
+			$id = base64_encode($id_generico); // Codifico o id para obter mais segurança
+			if($lembrar == "1") { // Se o checkbox foi marcado, gravo cookies de 1 ano
+				// Gravo os cookies responsáveis pelo login
+				/*setcookie("login", $login, time()+31536000); // setcookie(nome_cookie, valor_cookie, tempo_expiracao)
+				setcookie("senha", $pass, time()+31536000); // Nesses casos, usei o tempo como anual
+				setcookie("id", $id, time()+31536000);*/ // Assim: time()[agora]+[mais]3153600[60*60*24*365]{segs.*min.= 1 hora em segs => 1 hr em segs * 24 hrs = 1 dia => 1 dia * 365 dias = 1 ano}
+				$_SESSION["login"] = $login;
+				$_SESSION["senha"] = $senha_md5;
+				$_SESSION["id"] = $id;
+			}
+			else { // Caso contrário, gravo cookies que expirarão assim q o browser fechar
+				// Gravo os cookies responsáveis pelo login
+				/*setcookie("login", $login, 0); // Aqui os cookies expiram assim q o browser fechar
+				setcookie("senha", $pass, 0);
+				setcookie("id", $id, 0);*/
+				$_SESSION["login"] = $login;
+				$_SESSION["senha"] = $senha_md5;
+				$_SESSION["id"] = $id;
+			}
+			// Redireciono para a página restrita
 			header("Location: index.php?index");
 			exit();
 		}
-		else {
+		else { // Se não retornar, define mensagem de erro
 			echo "<script>alert('Dados Incorretos!');window.location='logar.php?index'</script>";
 		}
 	}
-	else {
+	else { // Caso tenha algum campo em branco, define mensagem de erro
 		echo "<script>alert('Por favor, preencha os campos corretamente!');window.location='logar.php?index'</script>";
 	}
 }
@@ -49,27 +65,27 @@ if(isset($_POST["logar"])) {
 
 
 
-if(isset($_POST["cadastrar"])) {
-	if(!empty($_POST["login"]) && !empty($_POST["senha"]) && !empty($_POST["email"])) {
-		$login = $class->antisql($_POST["login"]);
-		$nome = $class->antisql($_POST["nome"]);
-		$sobrenome = $class->antisql($_POST["sobrenome"]);
-		$senha = $class->antisql($_POST["senha"]);
+if(isset($_POST["cadastrar"])) { // Verifico se o botão cadastrar foi acionado
+	if(!empty($_POST["login"]) && !empty($_POST["senha"]) && !empty($_POST["email"])) { // Verifico se os campos foram preenchidos
+		$login = $class->antisql($_POST["login"]); // Filtro os dados de login name originados do formulário
+		$nome = $class->antisql($_POST["nome"]); // Filtro a senha originada do formulário
+		$sobrenome = $class->antisql($_POST["sobrenome"]); // Filtro o e-mail originado do formulário
+		$senha = $class->antisql($_POST["senha"]); // Filtro o e-mail originado do formulário
 		$senha = md5($senha);
-		$email = $class->antisql($_POST["email"]);
-		$senha_sha1 = sha1($senha);
-		$repeat_user = mysql_query("SELECT * FROM $tabela WHERE login='$login'") or die($mensagem_erro = "Houve um erro:<br />".mysql_error());
-		if(mysql_num_rows($repeat_user) > 0) {
-			echo "<script>alert('J� existe um usu�rio com este login!');window.location='logar.php?index'</script>";
+		$email = $class->antisql($_POST["email"]); // Filtro o e-mail originado do formulário
+		$senha_sha1 = sha1($senha); // Codifico a senha inserida para consulta SQL
+		$repeat_user = mysqli_query($conecta, "SELECT * FROM $tabela WHERE login='$login'") or die($mensagem_erro = "Houve um erro:<br />".mysqli_error()); // Faço a consulta ao SQL para verificar se não há usuários com o mesmo login name
+		if(mysqli_num_rows($repeat_user) > 0) { // Verifico se a consulta retorna algum resultado. Nesse caso, se retornar, define uma mensagem de erro.
+			echo "<script>alert('Já existe um usuário com este login!');window.location='logar.php?index'</script>";
 		}
 		else {
-			$insert = mysql_query("INSERT INTO $tabela(login, senha, email, nome, sobrenome, foto, epp, cash) VALUES('$login', '$senha', '$email', '$nome', '$sobrenome', 'new/new.png', '30', '5000')") or die(mysql_error());
-			if($insert) {
-				echo "<script>alert('Usu�rio cadastrado com sucesso!');window.location='logar.php?index'</script>";
+			$insert = mysqli_query($conecta, "INSERT INTO $tabela(login, senha, email, nome, sobrenome, foto, epp, cash) VALUES('$login', '$senha', '$email', '$nome', '$sobrenome', 'new/new.png', '30', '5000')") or die(mysqli_error()); // Insiro os dados no BD
+			if($insert) { // Verifico se a query foi executada com sucesso. Se sim, define mensagem de sucesso.
+				echo "<script>alert('Usuário cadastrado com sucesso!');window.location='logar.php?index'</script>";
 			}
 		}
 	}
-	else {
+	else { // Se houver algum campo em branco, define mensagem de erro
 		echo "<script>alert('Por favor, preencha os campos corretamente!');window.location='logar.php?index'</script>";
 	}
 }
@@ -83,14 +99,14 @@ if(isset($_POST["cadastrar"])) {
 if(isset($_POST["recuperar1"])) {
 	if(!empty($_POST["login"])) {
 		$login = $class->antisql($_POST["login"]);
-		$csql = mysql_query("select * from user where login = '$login';");
-		$rsql = mysql_fetch_array($csql);
+		$csql = mysqli_query($conecta, "select * from user where login = '$login';");
+		$rsql = mysqli_fetch_array($csql);
 		$hash = rand(1, 1000);
 		$hash = md5($hash);
-		$csql = mysql_query("update user set rec = '$hash' where id = '$rsql[id]';");
-		$arquivo = "<b>Foi solicitado a recupera��o da sua senha no Sgame</b><br>
-		Link para recupera��o da sua senha: <a href=\"http://sgame.willypete.com.br/logar.php?recuperar_senha&id=" . $rsql['id'] . "&rec=" . $hash . "\">Recuperar senha</a><br>
-		Caso voc� n�o tenha solicitado a recupera��o da sua senha apenas ignore este e-mail!<br>" . $creditos . "<br>";
+		$csql = mysqli_query($conecta, "update user set rec = '$hash' where id = '$rsql[id]';");
+		$arquivo = "<b>Foi solicitado a recuperação da sua senha no Sgame</b><br>
+		Link para recuperação da sua senha: <a href=\"http://sgame.willypete.com.br/logar.php?recuperar_senha&id=" . $rsql['id'] . "&rec=" . $hash . "\">Recuperar senha</a><br>
+		Caso você não tenha solicitado a recuperação da sua senha apenas ignore este e-mail!<br>" . $creditos . "<br>";
 		$destino = $rsql['email'];
 		$assunto = "Recuperar senha";
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -100,7 +116,7 @@ if(isset($_POST["recuperar1"])) {
 		if($enviaremail){
 			echo "<script>alert('Sua senha foi enviada para seu email!');window.location='logar.php?index'</script>";
 		} else {
-			echo "<script>alert('Houve um problema ao enviar email de recupera��o!');window.location='logar.php?index'</script>";
+			echo "<script>alert('Houve um problema ao enviar email de recuperação!');window.location='logar.php?index'</script>";
 		}
 	}
 	else { 
@@ -118,14 +134,14 @@ if(isset($_POST["recuperar1"])) {
 if(isset($_POST["recuperar2"])) {
 	if(!empty($_POST["email"])) {
 		$email = $class->antisql($_POST["email"]);
-		$csql = mysql_query("select * from user where email = '$email';");
-		$rsql = mysql_fetch_array($csql);
+		$csql = mysqli_query($conecta, "select * from user where email = '$email';");
+		$rsql = mysqli_fetch_array($csql);
 		$hash = rand(1, 1000);
 		$hash = md5($hash);
-		$csql = mysql_query("update user set rec = '$hash' where id = '$rsql[id]';");
-		$arquivo = "<b>Foi solicitado a recupera��o da sua senha no Sgame</b><br>
-		Link para recupera��o da sua senha: <a href=\"http://sgame.willypete.com.br/logar.php?recuperar_senha&id=" . $rsql['id'] . "&rec=" . $hash . "\">Recuperar senha</a><br>
-		Caso voc� n�o tenha solicitado a recupera��o da sua senha apenas ignore este e-mail!<br>" . $creditos . "<br>";
+		$csql = mysqli_query($conecta, "update user set rec = '$hash' where id = '$rsql[id]';");
+		$arquivo = "<b>Foi solicitado a recuperação da sua senha no Sgame</b><br>
+		Link para recuperação da sua senha: <a href=\"http://sgame.willypete.com.br/logar.php?recuperar_senha&id=" . $rsql['id'] . "&rec=" . $hash . "\">Recuperar senha</a><br>
+		Caso você não tenha solicitado a recuperação da sua senha apenas ignore este e-mail!<br>" . $creditos . "<br>";
 		$destino = $rsql['email'];
 		$assunto = "Recuperar senha";
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -135,7 +151,7 @@ if(isset($_POST["recuperar2"])) {
 		if($enviaremail){
 			echo "<script>alert('Sua senha foi enviada para seu email!');window.location='logar.php?index'</script>";
 		} else {
-			echo "<script>alert('Houve um problema ao enviar email de recupera��o!');window.location='logar.php?index'</script>";
+			echo "<script>alert('Houve um problema ao enviar email de recuperação!');window.location='logar.php?index'</script>";
 		}
 	}
 	else { 
@@ -159,18 +175,18 @@ if(isset($_POST["recuperar_senha1"])) {
 		$rec_user = $class->antisql($_POST["rec_user"]);
 		$nova_senha = $class->antisql($_POST["nova_senha"]);
 		$nova_senha1 = $class->antisql($_POST["nova_senha1"]);
-		$csql = mysql_query("select * from user where id = '$id_user' and rec = '$rec_user';");
-		if(mysql_num_rows($csql) > 0){
+		$csql = mysqli_query($conecta, "select * from user where id = '$id_user' and rec = '$rec_user';");
+		if(mysqli_num_rows($csql) > 0){
 			if($nova_senha == $nova_senha1){
 				$nova_senha_md5 = md5($nova_senha);
-				$alterar = mysql_query("update user set senha = '$nova_senha_md5', rec = NULL where id = '$id_user' and rec = '$rec_user';");
+				$alterar = mysqli_query($conecta, "update user set senha = '$nova_senha_md5', rec = NULL where id = '$id_user' and rec = '$rec_user';");
 				if($alterar){
 					echo "<script>alert('Senha alterada com sucesso!');window.location='logar.php?index'</script>";
 				}else{
 					echo "<script>alert('Houve um problema!');window.location='logar.php?index'</script>";
 				}
 			}else{
-				echo "<script>alert('As senhas n�o s�o iguais!');window.location='logar.php?index'</script>";
+				echo "<script>alert('As senhas não são iguais!');window.location='logar.php?index'</script>";
 			}
 		}else{
 			echo "<script>alert('Houve um problema ao validar a hash!');window.location='logar.php?index'</script>";
@@ -219,7 +235,7 @@ if(isset($_POST["md5"])) {
 
 $endereco = $_SERVER ['REQUEST_URI'];
 
-if(isset($_GET["index"]) || $endereco == "/logar.php" || $endereco == "/") {
+if(isset($_GET["index"]) || $endereco == "/logar.php" || $endereco == "/" || (count($_GET) == 0)) {
 	echo "
 	<html>
 	<head>
@@ -246,7 +262,7 @@ if(isset($_GET["index"]) || $endereco == "/logar.php" || $endereco == "/") {
 							<td><input type=\"password\" name=\"senha\" id=\"lgsenha\"></td>
 						</tr>
 						<tr>
-							<td></td>
+							<td><input type=\"checkbox\" name=\"lembrar\" id=\"lembrar\"><span class=\"texto\">Manter-me conectado</span></td>
 							<td><button type=\"submit\" name=\"logar\" value=\"Logar\" id=\"logar\">Logar</button></td>
 						</tr>
 					</table>
@@ -503,8 +519,8 @@ if(isset($_GET["recuperar_senha"])) {
 	$id_user = $class->antisql($_GET["id"]);
 	$rec_user = $class->antisql($_GET["rec"]);
 	if($rec_user != NULL){
-		$verifica = mysql_query("select * from user where id = '$id_user' and rec = '$rec_user';");
-		if(mysql_num_rows($verifica) > 0){
+		$verifica = mysqli_query($conecta, "select * from user where id = '$id_user' and rec = '$rec_user';");
+		if(mysqli_num_rows($verifica) > 0){
 			echo "
 			<form method=\"post\" action=\"\">
 				<table>

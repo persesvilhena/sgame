@@ -1,14 +1,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <?php
-$verperfil = mysql_query("SELECT * FROM perfil WHERE id='$row[id]'");
-if (mysql_num_rows($verperfil) == 0){
-mysql_query("insert into perfil values($row[id],null,null,null,null,null,null,null,null,null)");
+$verperfil = mysqli_query($conecta, "SELECT * FROM perfil WHERE id='$row[id]'");
+if (mysqli_num_rows($verperfil) == 0){
+mysqli_query($conecta, "insert into perfil values($row[id],null,null,null,null,null,null,null,null,null)");
 }
 // Se o usuário clicou no botão cadastrar efetua as ações
 if (isset($_POST['cadastrar'])) {
 
-//$sql = mysql_query("SELECT foto FROM user WHERE id = '$id';");
-//$usuario = mysql_fetch_object($sql);
+//$sql = mysqli_query($conecta, "SELECT foto FROM user WHERE id = '$id';");
+//$usuario = mysqli_fetch_object($sql);
 //unlink("fotos/".$usuario->foto."");
  
 	// Recupera os dados dos campos
@@ -57,8 +57,8 @@ if (isset($_POST['cadastrar'])) {
 		// Se não houver nenhum erro
 		if (!isset($error)){
 		//if (count($error) == 0) {
-			$sql = mysql_query("SELECT foto FROM user WHERE id = '$id';");
-			$usuario = mysql_fetch_object($sql);
+			$sql = mysqli_query($conecta, "SELECT foto FROM user WHERE id = '$id';");
+			$usuario = mysqli_fetch_object($sql);
 			unlink("fotos/".$usuario->foto."");
 			unlink("fotos/min/".$usuario->foto."");
  
@@ -75,7 +75,7 @@ if (isset($_POST['cadastrar'])) {
 			move_uploaded_file($foto["tmp_name"], $caminho_imagem);
  
 			// Insere os dados no banco
-			$sql = mysql_query("update user set foto = '$nome_imagem' where id = '$id';");
+			$sql = mysqli_query($conecta, "update user set foto = '$nome_imagem' where id = '$id';");
 
 			require('engine/wide/WideImage.php');
 
@@ -104,11 +104,11 @@ if (isset($_POST['cadastrar'])) {
 
 <?php
 if($i1 == 2){
-$sql2 = mysql_query("SELECT * FROM post WHERE id = '$i2';");
-$res2 = mysql_fetch_array($sql2);
+$sql2 = mysqli_query($conecta, "SELECT * FROM post WHERE id = '$i2';");
+$res2 = mysqli_fetch_array($sql2);
 $vnum = $res2['us'];
 if($vnum == $row['id']){
-$csql4 = mysql_query("DELETE FROM post WHERE id='$i2'");
+$csql4 = mysqli_query($conecta, "DELETE FROM post WHERE id='$i2'");
 if($csql4) {
 $msg_erro = "Postagem apagada com sucesso!";
 }
@@ -189,8 +189,8 @@ echo "<div id=cont>" . $msg_erro . "</div>";
 </span></div></div>-->
 
 <?php
-//$res1 = mysql_query("SELECT * FROM `post` where us = '$row[id]' ORDER BY id DESC LIMIT 0 , 100");
-// while($escrever1=mysql_fetch_array($res1)){
+//$res1 = mysqli_query($conecta, "SELECT * FROM `post` where us = '$row[id]' ORDER BY id DESC LIMIT 0 , 100");
+// while($escrever1=mysqli_fetch_array($res1)){
 //echo "<div id=\"cj\" style=\"margin-top: 4px;\"><a href=index.php?user&i1=1&i2=" . $escrever1['us'] . " class=link><span class=\"subtitulo\">" . $escrever1['usn'] . "</span></a>
 //<a href=\"index.php?perfil&i1=2&i2=" . $escrever1['id'] . "\" class=\"botao\" align=\"right\">Apagar</a></div>
 //<div id=\"fj\"><div id=\"ctj\"><span class=\"texto\">" . $escrever1['msg'] . "</span></div></div>";

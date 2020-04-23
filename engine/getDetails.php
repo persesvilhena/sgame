@@ -21,10 +21,10 @@ $ua = $_GET['ua'];
 /////////////////////JANELA USUARIOS E ARTISTAS
 /////////////////////////////////////////////////////////////
 if($ua == "us"){
-$csql = mysql_query("select * from user where id = '$idu';");
-$rsql = mysql_fetch_array($csql);
-$perfilcsql = mysql_query("select * from perfil where id = '$idu';");
-$perfilrsql = mysql_fetch_array($perfilcsql);
+$csql = mysqli_query($conecta, "select * from user where id = '$idu';");
+$rsql = mysqli_fetch_array($csql);
+$perfilcsql = mysqli_query($conecta, "select * from perfil where id = '$idu';");
+$perfilrsql = mysqli_fetch_array($perfilcsql);
 
 echo "
 		<img src=\"fotos/" . $rsql['foto'] . "\" width=\"250\" height=\"250\" align=\"left\" class=\"pr1\">
@@ -46,11 +46,11 @@ echo "
 }
 
 if($ua == "ar"){
-	$csql = mysql_query("select * from artista where id = '$idu';");
-$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from artista where id = '$idu';");
+$rsql = mysqli_fetch_array($csql);
 
-	$estmus = mysql_query("select * from est_musical where id = '$rsql[est_musical]';");
-	$restmus = mysql_fetch_array($estmus);
+	$estmus = mysqli_query($conecta, "select * from est_musical where id = '$rsql[est_musical]';");
+	$restmus = mysqli_fetch_array($estmus);
 		if ($rsql['musicas'] == 1){ $mus = "Proprias"; }
 		if ($rsql['musicas'] == 2){ $mus = "Covers"; }
 		if ($rsql['musicas'] == 3){ $mus = "Mistas"; }
@@ -184,10 +184,10 @@ if($ua == "perfil_alt1"){
 
 
 if($ua == "btn_like"){
-	$csql = mysql_query("select * from gostar where id_post = '$idu' and gostei = '1'");
-	while($rsql = mysql_fetch_array($csql)){
-		$csqluser = mysql_query("select * from user where id = '$rsql[id_us]'");
-		$rsqluser = mysql_fetch_array($csqluser);
+	$csql = mysqli_query($conecta, "select * from gostar where id_post = '$idu' and gostei = '1'");
+	while($rsql = mysqli_fetch_array($csql)){
+		$csqluser = mysqli_query($conecta, "select * from user where id = '$rsql[id_us]'");
+		$rsqluser = mysqli_fetch_array($csqluser);
 		$datatempo = explode(" ", $rsql['data']);
 		$dat = explode("-", $datatempo[0]);
 		echo "
@@ -201,10 +201,10 @@ if($ua == "btn_like"){
 }
 
 if($ua == "btn_nlike"){
-	$csql = mysql_query("select * from gostar where id_post = '$idu' and gostei = '0'");
-	while($rsql = mysql_fetch_array($csql)){
-		$csqluser = mysql_query("select * from user where id = '$rsql[id_us]'");
-		$rsqluser = mysql_fetch_array($csqluser);
+	$csql = mysqli_query($conecta, "select * from gostar where id_post = '$idu' and gostei = '0'");
+	while($rsql = mysqli_fetch_array($csql)){
+		$csqluser = mysqli_query($conecta, "select * from user where id = '$rsql[id_us]'");
+		$rsqluser = mysqli_fetch_array($csqluser);
 		$datatempo = explode(" ", $rsql['data']);
 		$dat = explode("-", $datatempo[0]);
 		echo "
@@ -218,10 +218,10 @@ if($ua == "btn_nlike"){
 }
 
 if($ua == "btn_like2"){
-	$csql = mysql_query("select * from gostar where id_repost = '$idu' and gostei = '1'");
-	while($rsql = mysql_fetch_array($csql)){
-		$csqluser = mysql_query("select * from user where id = '$rsql[id_us]'");
-		$rsqluser = mysql_fetch_array($csqluser);
+	$csql = mysqli_query($conecta, "select * from gostar where id_repost = '$idu' and gostei = '1'");
+	while($rsql = mysqli_fetch_array($csql)){
+		$csqluser = mysqli_query($conecta, "select * from user where id = '$rsql[id_us]'");
+		$rsqluser = mysqli_fetch_array($csqluser);
 		$datatempo = explode(" ", $rsql['data']);
 		$dat = explode("-", $datatempo[0]);
 		echo "
@@ -235,10 +235,10 @@ if($ua == "btn_like2"){
 }
 
 if($ua == "btn_nlike2"){
-	$csql = mysql_query("select * from gostar where id_repost = '$idu' and gostei = '0'");
-	while($rsql = mysql_fetch_array($csql)){
-		$csqluser = mysql_query("select * from user where id = '$rsql[id_us]'");
-		$rsqluser = mysql_fetch_array($csqluser);
+	$csql = mysqli_query($conecta, "select * from gostar where id_repost = '$idu' and gostei = '0'");
+	while($rsql = mysqli_fetch_array($csql)){
+		$csqluser = mysqli_query($conecta, "select * from user where id = '$rsql[id_us]'");
+		$rsqluser = mysqli_fetch_array($csqluser);
 		$datatempo = explode(" ", $rsql['data']);
 		$dat = explode("-", $datatempo[0]);
 		echo "
@@ -269,8 +269,8 @@ if($ua == "btn_nlike2"){
 
 /////////////////////////////////MENU DO POST
 if($ua == "menu_us"){
-	$csql = mysql_query("select * from post where id = '$idu';");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from post where id = '$idu';");
+	$rsql = mysqli_fetch_array($csql);
 	$datatempo = explode(" ", $rsql['data']);
 	$dat = explode("-", $datatempo[0]);
 	echo "
@@ -302,8 +302,8 @@ if($ua == "menu_us"){
 
 /////////////////////////////////MENU DO REPOST
 if($ua == "remenu_us"){
-	$csql = mysql_query("select * from repost where id = '$idu';");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from repost where id = '$idu';");
+	$rsql = mysqli_fetch_array($csql);
 	$datatempo = explode(" ", $rsql['data']);
 	$dat = explode("-", $datatempo[0]);
 	echo "
@@ -346,16 +346,16 @@ if($ua == "remenu_us"){
 /////////////////////////////////////////////////////////////
 
 if($ua == "carta"){
-$csql = mysql_query("select * from user_cartas where id = '$idu';");
-$rsql = mysql_fetch_array($csql);
-$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-$rsql1 = mysql_fetch_array($csql1);
-$csql2 = mysql_query("select * from artista where id = '$rsql1[artista]';");
-$rsql2 = mysql_fetch_array($csql2);
-$csql3 = mysql_query("select * from est_musical where id = '$rsql1[est_musical]';");
-$rsql3 = mysql_fetch_array($csql3);
-$csql4 = mysql_query("select * from tip where id = '$rsql1[tip]';");
-$rsql4 = mysql_fetch_array($csql4);
+$csql = mysqli_query($conecta, "select * from user_cartas where id = '$idu';");
+$rsql = mysqli_fetch_array($csql);
+$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+$rsql1 = mysqli_fetch_array($csql1);
+$csql2 = mysqli_query($conecta, "select * from artista where id = '$rsql1[artista]';");
+$rsql2 = mysqli_fetch_array($csql2);
+$csql3 = mysqli_query($conecta, "select * from est_musical where id = '$rsql1[est_musical]';");
+$rsql3 = mysqli_fetch_array($csql3);
+$csql4 = mysqli_query($conecta, "select * from tip where id = '$rsql1[tip]';");
+$rsql4 = mysqli_fetch_array($csql4);
 
 echo "
 		<span class=\"texto\">
@@ -383,10 +383,10 @@ echo "
 <form action=\"index.php?index\" method=\"post\">
 <input name=\"tip\" type=\"hidden\" value=\"" . $idu . "\">
 <select name=\"carta\">";
-$csql = mysql_query("select * from user_cartas where deid = '$id';");
-while($rsql = mysql_fetch_array($csql)){
-	$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-	$rsql1 = mysql_fetch_array($csql1);
+$csql = mysqli_query($conecta, "select * from user_cartas where deid = '$id';");
+while($rsql = mysqli_fetch_array($csql)){
+	$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+	$rsql1 = mysqli_fetch_array($csql1);
 	echo "<option value=\"" . $rsql['id'] . "\">" . $rsql1['nome'] . "</option>";
 }
 
@@ -399,16 +399,16 @@ echo "
 
 
 if($ua == "carta_ver"){
-$csql = mysql_query("select * from cartas where id = '$idu';");
-$rsql = mysql_fetch_array($csql);
-$csql1 = mysql_query("select * from user_cartas where carta = '$idu' and deid = '$row[id]';");
-$rsql1 = mysql_fetch_array($csql1);
-$csql2 = mysql_query("select * from artista where id = '$rsql[artista]';");
-$rsql2 = mysql_fetch_array($csql2);
-$csql3 = mysql_query("select * from est_musical where id = '$rsql[est_musical]';");
-$rsql3 = mysql_fetch_array($csql3);
-$csql4 = mysql_query("select * from tip where id = '$rsql[tip]';");
-$rsql4 = mysql_fetch_array($csql4);
+$csql = mysqli_query($conecta, "select * from cartas where id = '$idu';");
+$rsql = mysqli_fetch_array($csql);
+$csql1 = mysqli_query($conecta, "select * from user_cartas where carta = '$idu' and deid = '$row[id]';");
+$rsql1 = mysqli_fetch_array($csql1);
+$csql2 = mysqli_query($conecta, "select * from artista where id = '$rsql[artista]';");
+$rsql2 = mysqli_fetch_array($csql2);
+$csql3 = mysqli_query($conecta, "select * from est_musical where id = '$rsql[est_musical]';");
+$rsql3 = mysqli_fetch_array($csql3);
+$csql4 = mysqli_query($conecta, "select * from tip where id = '$rsql[tip]';");
+$rsql4 = mysqli_fetch_array($csql4);
 
 echo "
 	<span class=\"texto\">
@@ -445,12 +445,12 @@ echo "
 /////////////////////////////////////////////////////////////
 
 if($ua == "ee"){
-$csql = mysql_query("select * from user_ee where id = '$idu';");
-$rsql = mysql_fetch_array($csql);
-$csql1 = mysql_query("select * from ee where id = '$rsql[ee]';");
-$rsql1 = mysql_fetch_array($csql1);
-$csql2 = mysql_query("select * from tip where id = '$rsql1[tip]';");
-$rsql2 = mysql_fetch_array($csql2);
+$csql = mysqli_query($conecta, "select * from user_ee where id = '$idu';");
+$rsql = mysqli_fetch_array($csql);
+$csql1 = mysqli_query($conecta, "select * from ee where id = '$rsql[ee]';");
+$rsql1 = mysqli_fetch_array($csql1);
+$csql2 = mysqli_query($conecta, "select * from tip where id = '$rsql1[tip]';");
+$rsql2 = mysqli_fetch_array($csql2);
 
 
 echo "
@@ -473,12 +473,12 @@ echo "
 
 
 if($ua == "ee_ver"){
-$csql = mysql_query("select * from ee where id = '$idu';");
-$rsql = mysql_fetch_array($csql);
-$csql1 = mysql_query("select * from user_ee where ee = '$idu' and deid = '$row[id]';");
-$rsql1 = mysql_fetch_array($csql1);
-$csql2 = mysql_query("select * from tip where id = '$rsql[tip]';");
-$rsql2 = mysql_fetch_array($csql2);
+$csql = mysqli_query($conecta, "select * from ee where id = '$idu';");
+$rsql = mysqli_fetch_array($csql);
+$csql1 = mysqli_query($conecta, "select * from user_ee where ee = '$idu' and deid = '$row[id]';");
+$rsql1 = mysqli_fetch_array($csql1);
+$csql2 = mysqli_query($conecta, "select * from tip where id = '$rsql[tip]';");
+$rsql2 = mysqli_fetch_array($csql2);
 
 
 echo "

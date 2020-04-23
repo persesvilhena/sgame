@@ -9,14 +9,14 @@ if ($ar == 1){
 	$linkdo3 = 3;
 }
 
-$csqlus = mysql_query("select * from user where id = '$escrever3[id_us]';");
- 		$rsqlus = mysql_fetch_array($csqlus);
+$csqlus = mysqli_query($conecta, "select * from user where id = '$escrever3[id_us]';");
+ 		$rsqlus = mysqli_fetch_array($csqlus);
  		$datatempo2 = explode(" ", $escrever3['data']);
 		$dat2 = explode("-", $datatempo2[0]);
-		$like2 = mysql_query("select * from $tabelagostar where id_repost = '$escrever3[id]' and gostei = '1'");
-		$rlike2 = mysql_num_rows($like2);
-		$nlike2 = mysql_query("select * from $tabelagostar where id_repost = '$escrever3[id]' and gostei = '0'");
-		$rnlike2 = mysql_num_rows($nlike2);
+		$like2 = mysqli_query($conecta, "select * from $tabelagostar where id_repost = '$escrever3[id]' and gostei = '1'");
+		$rlike2 = mysqli_num_rows($like2);
+		$nlike2 = mysqli_query($conecta, "select * from $tabelagostar where id_repost = '$escrever3[id]' and gostei = '0'");
+		$rnlike2 = mysqli_num_rows($nlike2);
 		echo "<div style=\"min-height: 40px; position: static;\">
 		<div style=\"right: 0px; position: absolute;\">
 		<a href=\"#pfdialog\" name=\"pfmodal\" class=\"classe4\" onclick=\"CarregaDadosJanela('" . $escrever3['id'] . "','remenu_us');\"><img src=\"engine/imgs/showmenu.png\"></a>
@@ -42,9 +42,9 @@ $csqlus = mysql_query("select * from user where id = '$escrever3[id_us]';");
 		<div align=\"right\">
 		<a href=\"#rgostou" . $i . "\" name=\"fechamenu\" class=\"classe4\"><img src=\"engine/imgs/cancela.png\"></a>
 		</div>";
-		while($rrlike2 = mysql_fetch_array($like2)){
-			$csqlrlk2 = mysql_query("select * from user where id = '$rrlike2[id_us]'");
-			$rsqlrlk2 = mysql_fetch_array($csqlrlk2);
+		while($rrlike2 = mysqli_fetch_array($like2)){
+			$csqlrlk2 = mysqli_query($conecta, "select * from user where id = '$rrlike2[id_us]'");
+			$rsqlrlk2 = mysqli_fetch_array($csqlrlk2);
 			$datatempo3 = explode(" ", $rrlike2['data']);
 			$dat3 = explode("-", $datatempo3[0]);
 			echo "
@@ -66,9 +66,9 @@ $csqlus = mysql_query("select * from user where id = '$escrever3[id_us]';");
 		<div align=\"right\">
 		<a href=\"#rngostou" . $i . "\" name=\"fechamenu\" class=\"classe4\"><img src=\"engine/imgs/cancela.png\"></a>
 		</div>";
-		while($rrnlike2 = mysql_fetch_array($nlike2)){
-			$csqlrnlk2 = mysql_query("select * from user where id = '$rrnlike2[id_us]'");
-			$rsqlrnlk2 = mysql_fetch_array($csqlrnlk2);
+		while($rrnlike2 = mysqli_fetch_array($nlike2)){
+			$csqlrnlk2 = mysqli_query($conecta, "select * from user where id = '$rrnlike2[id_us]'");
+			$rsqlrnlk2 = mysqli_fetch_array($csqlrnlk2);
 			$datatempo4 = explode(" ", $rrnlike2['data']);
 			$dat4 = explode("-", $datatempo4[0]);
 			echo "

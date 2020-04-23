@@ -15,11 +15,11 @@
 if ($i1 == 1 || $i1 == null){
 echo "<div id=\"cj\"><span class=\"titulo\">Ataques Feitos:</span></div>";
 echo "<div id =\"fj\"><div id =\"ctj\">";
-$res = mysql_query("SELECT * FROM `rel` WHERE `deid` LIKE '$id' ORDER BY id DESC limit $row[epp];"); 
+$res = mysqli_query($conecta, "SELECT * FROM `rel` WHERE `deid` LIKE '$id' ORDER BY id DESC limit $row[epp];"); 
 echo "<div class=\"tabela1\"><table><tr><td>Resultado:</td><td width=250>Adversário:</td></tr>";
- while($escrever=mysql_fetch_array($res)){
- 	$csql = mysql_query("SELECT * FROM user WHERE id='$escrever[paraid]'");
-	$rsql = mysql_fetch_array($csql);
+ while($escrever=mysqli_fetch_array($res)){
+ 	$csql = mysqli_query($conecta, "SELECT * FROM user WHERE id='$escrever[paraid]'");
+	$rsql = mysqli_fetch_array($csql);
  	if($escrever['res'] == 1){ $resultado = "Você ganhou o ataque!"; }
  	if($escrever['res'] == 2){ $resultado = "O ataque empatou!"; }
  	if($escrever['res'] == 3){ $resultado = "Você perdeu o ataque!"; }
@@ -36,11 +36,11 @@ echo "</div></div><br>";
 
 echo "<div id=\"cj\"><span class=\"titulo\">Ataques Recebidos:</span></div>";
 echo "<div id =\"fj\"><div id =\"ctj\">";
-$res2 = mysql_query("SELECT * FROM `rel` WHERE `paraid` LIKE '$id' ORDER BY id DESC limit $row[epp];"); 
+$res2 = mysqli_query($conecta, "SELECT * FROM `rel` WHERE `paraid` LIKE '$id' ORDER BY id DESC limit $row[epp];"); 
 echo "<div class=\"tabela1\"><table><tr><td>Resultado:</td><td width=250>Adversário:</td></tr>";
- while($escrever2=mysql_fetch_array($res2)){
-	$csql2 = mysql_query("SELECT * FROM user WHERE id='$escrever2[deid]'");
-	$rsql2 = mysql_fetch_array($csql2);
+ while($escrever2=mysqli_fetch_array($res2)){
+	$csql2 = mysqli_query($conecta, "SELECT * FROM user WHERE id='$escrever2[deid]'");
+	$rsql2 = mysqli_fetch_array($csql2);
  	if($escrever2['res'] == 1){ $resultado = "Você perdeu o ataque!"; }
  	if($escrever2['res'] == 2){ $resultado = "O ataque empatou!"; }
  	if($escrever2['res'] == 3){ $resultado = "Você ganhou o ataque!"; }
@@ -74,8 +74,8 @@ echo "</div></div>";
 
 
 if ($i1 == 2){
-	$csql = mysql_query("SELECT * FROM rel WHERE id='$i2'");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "SELECT * FROM rel WHERE id='$i2'");
+	$rsql = mysqli_fetch_array($csql);
 	if($rsql['deid'] == $id){
 		if($rsql['res'] == 1){ $resultado = "Você ganhou o ataque!"; }
 	 	if($rsql['res'] == 2){ $resultado = "O ataque empatou!"; }

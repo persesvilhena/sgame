@@ -1,7 +1,7 @@
 <?php
-$res2 = mysql_query("SELECT * FROM `contato` where deid = '$id'");
+$res2 = mysqli_query($conecta, "SELECT * FROM `contato` where deid = '$id'");
 $contatos = $id;
-while($escrever2=mysql_fetch_array($res2)){
+while($escrever2=mysqli_fetch_array($res2)){
 	// echo "<br>" . $escrever2['cotid'] . "<br>";
 	$contatos = $contatos . "," . $escrever2['cotid'];
 }

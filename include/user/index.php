@@ -4,16 +4,16 @@ if(isset($_POST["convite"])) {
 	$id_us = $class->antisql($_POST["id_us"]);
 	$id_ar = $class->antisql($_POST["id_ar"]); 
 	$msg = $class->antisql($_POST["msg"]); 
-	$rp1 = mysql_query("SELECT * FROM membros WHERE id_us = '$id_us' and id_ar = '$id_ar';");
-	if(mysql_num_rows($rp1) > 0){
+	$rp1 = mysqli_query($conecta, "SELECT * FROM membros WHERE id_us = '$id_us' and id_ar = '$id_ar';");
+	if(mysqli_num_rows($rp1) > 0){
 		echo "<script>alert('Este usuario ja é da banda!');window.location='" . $pagina . "';</script>";
 	}else{
-	$rp = mysql_query("SELECT * FROM convite_membro WHERE id_us = '$id_us' and id_ar = '$id_ar';");
-	if(mysql_num_rows($rp) > 0){
+	$rp = mysqli_query($conecta, "SELECT * FROM convite_membro WHERE id_us = '$id_us' and id_ar = '$id_ar';");
+	if(mysqli_num_rows($rp) > 0){
 		echo "<script>alert('Ja existe um convite para este usuario!');window.location='" . $pagina . "';</script>";
 	}else{
 	if(!empty($_POST["id_us"]) && !empty($_POST["id_ar"]) && !empty($_POST["msg"])) { 
-		$insert = mysql_query("insert into convite_membro (id_us, id_ar, msg) values('$id_us', '$id_ar', '$msg');") or die(mysql_error());
+		$insert = mysqli_query($conecta, "insert into convite_membro (id_us, id_ar, msg) values('$id_us', '$id_ar', '$msg');") or die(mysqli_error());
 		if($insert) { 
 			echo "<script>alert('Convite enviado com sucesso!');window.location='" . $pagina . "';</script>";
 		}
@@ -25,11 +25,11 @@ if(isset($_POST["convite"])) {
 }
 }
 if ($i1 == 1){
-$csql = mysql_query("SELECT * FROM user WHERE id='$i2'");
-$rsql = mysql_fetch_array($csql);
-$csql2 = mysql_query("SELECT * FROM perfil WHERE id='$i2'");
-$rsql2 = mysql_fetch_array($csql2);
-$repeat_contato = mysql_query("SELECT * FROM contato WHERE deid='$id' and cotid='$i2'");
+$csql = mysqli_query($conecta, "SELECT * FROM user WHERE id='$i2'");
+$rsql = mysqli_fetch_array($csql);
+$csql2 = mysqli_query($conecta, "SELECT * FROM perfil WHERE id='$i2'");
+$rsql2 = mysqli_fetch_array($csql2);
+$repeat_contato = mysqli_query($conecta, "SELECT * FROM contato WHERE deid='$id' and cotid='$i2'");
 
 
 
@@ -64,7 +64,7 @@ echo "</div>
 <img width=\"198\" src=\"fotos/" . $rsql['foto'] . "\"class=\"pr1\">
 <hr size=\"1\" color=\"#cccccc\">
 ";
-if (mysql_num_rows($repeat_contato) > 0){
+if (mysqli_num_rows($repeat_contato) > 0){
 echo "<a href=\"index.php?user&i1=3&i2=" . $i2 . "\" class=\"menu2\">Apagar contato</a>";
 } else {
 echo "<a href=\"index.php?user&i1=2&i2=" . $i2 . "\" class=\"menu2\">Adicionar contato</a>";
@@ -86,7 +86,7 @@ echo "</span>
 
 
 if ($i1 == 2){
-$add = mysql_query("INSERT INTO contato(deid, cotid) VALUES('$id', '$i2')") or die(mysql_error()); 
+$add = mysqli_query($conecta, "INSERT INTO contato(deid, cotid) VALUES('$id', '$i2')") or die(mysqli_error()); 
 if($add) {
 $msg_erro = "Contato adicionado com sucesso!";
 }
@@ -103,7 +103,7 @@ echo "<div id=cont><span class=texto>" . $msg_erro . "</span></div>";
 
 
 if ($i1 == 3){
-$add = mysql_query("delete from contato where deid = '$row[id]' and cotid = '$i2'") or die(mysql_error()); 
+$add = mysqli_query($conecta, "delete from contato where deid = '$row[id]' and cotid = '$i2'") or die(mysqli_error()); 
 if($add) {
 $msg_erro = "Contato apagado com sucesso!";
 }
@@ -120,11 +120,11 @@ echo "<div id=cont><span class=texto>" . $msg_erro . "</span></div>";
 
 
 if ($i1 == 4){
-$csql = mysql_query("SELECT * FROM user WHERE id='$i2'");
-$rsql = mysql_fetch_array($csql);
+$csql = mysqli_query($conecta, "SELECT * FROM user WHERE id='$i2'");
+$rsql = mysqli_fetch_array($csql);
 echo "<span class=titulo>Fotos de " . $rsql['nome'] . " " . $rsql['sobrenome'] . "</span><hr size=\"1\" color=\"#cccccc\">";
-$res = mysql_query("SELECT * FROM `album` where us='$i2';");
- while($escrever=mysql_fetch_array($res)){
+$res = mysqli_query($conecta, "SELECT * FROM `album` where us='$i2';");
+ while($escrever=mysqli_fetch_array($res)){
  echo "
 <div id=\"item\" style=\"position: relative; width: 143px; float: left; margin: 2px; padding: 5px; text-align: justify;\">
 <a href=index.php?album&i1=2&i2=" . $escrever['id'] . "><img src=album/" . $escrever['nome'] . " width=\"143\"  height=\"120\"></a> 
@@ -137,12 +137,12 @@ $res = mysql_query("SELECT * FROM `album` where us='$i2';");
 
 
 if ($i1 == 5){
-	$csql = mysql_query("select * from user where id = '$i2'");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from user where id = '$i2'");
+	$rsql = mysqli_fetch_array($csql);
 	echo "<span class=\"titulo\">Videos de " . $rsql['nome'] . " " . $rsql['sobrenome'] . "</span>
 	<hr size=\"1\" color=\"#cccccc\">";
-	$videoscsql = mysql_query("SELECT * FROM videos WHERE id_us = '$i2';");
-	while($videosrsql = mysql_fetch_array($videoscsql)){
+	$videoscsql = mysqli_query($conecta, "SELECT * FROM videos WHERE id_us = '$i2';");
+	while($videosrsql = mysqli_fetch_array($videoscsql)){
 		echo "
 		<div id=\"item\" style=\"position: relative; width: 381px; float: left; margin: 2px; text-align: justify; padding: 5px;\">
 		<div id=\"myElement" . $videosrsql['id'] . "\">Loading the player...</div>
@@ -164,12 +164,12 @@ if ($i1 == 5){
 
 
 if ($i1 == 6){
-	$csql = mysql_query("select * from user where id = '$i2'");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from user where id = '$i2'");
+	$rsql = mysqli_fetch_array($csql);
 	echo "<span class=\"titulo\">Musicas de " . $rsql['nome'] . " " . $rsql['sobrenome'] . "</span>
 	<hr size=\"1\" color=\"#cccccc\">";
-	$musicascsql = mysql_query("SELECT * FROM musicas WHERE id_us = '$i2';");
-	while($musicasrsql = mysql_fetch_array($musicascsql)){
+	$musicascsql = mysqli_query($conecta, "SELECT * FROM musicas WHERE id_us = '$i2';");
+	while($musicasrsql = mysqli_fetch_array($musicascsql)){
 		echo "
 		<div id=\"item\" style=\"position: relative; width: 381px; float: left; margin: 2px; text-align: justify; padding: 5px;\">
 		<center>

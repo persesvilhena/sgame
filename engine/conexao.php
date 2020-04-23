@@ -1,25 +1,31 @@
 <?php
-$bd_server = "localhost";
-$bd_user = "root";
-$bd_pass = "";
-$bd_name = "game";
 
 header('Content-Type: text/html; charset=utf-8');
-$conecta = mysql_connect($bd_server, $bd_user, $bd_pass);
-mysql_select_db($bd_name, $conecta);
-mysql_query("SET NAMES 'utf8'");
-mysql_query('SET character_set_connection=utf8');
-mysql_query('SET character_set_client=utf8');
-mysql_query('SET character_set_results=utf8');
+
+$conecta = mysqli_connect("localhost", "root", "");
+		   mysqli_select_db($conecta, "sgame");
+
+mysqli_query($conecta, "SET NAMES 'utf8'");
+mysqli_query($conecta, 'SET character_set_connection=utf8');
+mysqli_query($conecta, 'SET character_set_client=utf8');
+mysqli_query($conecta, 'SET character_set_results=utf8');
+
 		   
-class SistemaLogin {
+class SistemaLogin { // Defino a classe principal do sistema
+	
+	//function antisql($sql) { // Função Anti-SQL
+	//	$sql = get_magic_quotes_gpc() == 0 ? addslashes($sql) : $sql;
+	//	$sql = trim($sql);
+	//	$sql = strip_tags($sql);
+	//	$sql = mysqli_escape_string($sql);
+	//	return preg_replace("@(--|\#|\*|;|=)@s", '', $sql);
+	//}
 	function antisql($sql) {
     $sql = addslashes($sql);
     return $sql;
 	}
 }
 $class = new SistemaLogin;
-
 class EngineGame { 
 	public $tempo_batalha_simples = 300;
 	public $tempo_batalha_completa = 720;
@@ -34,7 +40,6 @@ class EngineGame {
 	public $porcentagem_ganho_cartas_pts = 0.1;
 }
 $engine = new EngineGame;
-
 $tabela = "user";
 $creditos = "Sgame © 2016";
 ?>

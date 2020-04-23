@@ -68,7 +68,7 @@ if($row['adm'] == 1){
 				move_uploaded_file($foto["tmp_name"], $caminho_imagem);
 	 
 				// Insere os dados no banco
-				$sql = mysql_query("INSERT INTO cartas(nome, artista, est_musical, ano, qtd_vendas, pts, qtd_fas, tip, valor, imagem) VALUES ('$carta_nome', '$carta_artista', '$carta_est_musical', '$carta_ano', '$carta_qtd_vendas', '$carta_pts', '$carta_qtd_fas', '$carta_tip', '$carta_valor', '$nome_imagem');");
+				$sql = mysqli_query($conecta, "INSERT INTO cartas(nome, artista, est_musical, ano, qtd_vendas, pts, qtd_fas, tip, valor, imagem) VALUES ('$carta_nome', '$carta_artista', '$carta_est_musical', '$carta_ano', '$carta_qtd_vendas', '$carta_pts', '$carta_qtd_fas', '$carta_tip', '$carta_valor', '$nome_imagem');");
 
 				if ($sql){
 					echo "<script>alert('Nova carta inserida com sucesso!'); window.location = 'index.php?admin'</script>";
@@ -135,14 +135,14 @@ if($row['adm'] == 1){
 			}
 
 			if (!isset($error)){
-				$sql = mysql_query("SELECT imagem FROM cartas WHERE id = '$carta_id';");
-				$usuario = mysql_fetch_object($sql);
+				$sql = mysqli_query($conecta, "SELECT imagem FROM cartas WHERE id = '$carta_id';");
+				$usuario = mysqli_fetch_object($sql);
 				unlink("cartas/".$usuario->imagem."");
 				preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $foto["name"], $ext);
 	        	$nome_imagem = md5(uniqid(time())) . "." . $ext[1];
 	        	$caminho_imagem = "cartas/" . $nome_imagem;
 				move_uploaded_file($foto["tmp_name"], $caminho_imagem);
-				$sql = mysql_query("update cartas set nome = '$carta_nome', artista = '$carta_artista', est_musical = '$carta_est_musical', ano = '$carta_ano', qtd_vendas = '$carta_qtd_vendas', pts = '$carta_pts', qtd_fas = '$carta_qtd_fas', tip = '$carta_tip', valor = '$carta_valor', imagem = '$nome_imagem' where id = '$carta_id';");
+				$sql = mysqli_query($conecta, "update cartas set nome = '$carta_nome', artista = '$carta_artista', est_musical = '$carta_est_musical', ano = '$carta_ano', qtd_vendas = '$carta_qtd_vendas', pts = '$carta_pts', qtd_fas = '$carta_qtd_fas', tip = '$carta_tip', valor = '$carta_valor', imagem = '$nome_imagem' where id = '$carta_id';");
 
 				if ($sql){
 					echo "<script>alert('Carta alterada com sucesso!'); window.location = 'index.php?admin'</script>";
@@ -207,7 +207,7 @@ if($row['adm'] == 1){
 	        	$nome_imagem = md5(uniqid(time())) . "." . $ext[1];
 	        	$caminho_imagem = "cartas/" . $nome_imagem;
 				move_uploaded_file($foto["tmp_name"], $caminho_imagem);
-				$sql = mysql_query("INSERT INTO ee(nome, ganho, valor, tip, imagem) VALUES ('$efeito_nome', '$efeito_ganho', '$efeito_valor', '$efeito_tip', '$nome_imagem');");
+				$sql = mysqli_query($conecta, "INSERT INTO ee(nome, ganho, valor, tip, imagem) VALUES ('$efeito_nome', '$efeito_ganho', '$efeito_valor', '$efeito_tip', '$nome_imagem');");
 				if ($sql){
 					echo "<script>alert('Novo efeito inserido com sucesso!'); window.location = 'index.php?admin'</script>";
 				}else{
@@ -264,14 +264,14 @@ if($row['adm'] == 1){
 			}
 
 			if (!isset($error)){
-				$sql = mysql_query("SELECT imagem FROM ee WHERE id = '$efeito_id';");
-				$usuario = mysql_fetch_object($sql);
+				$sql = mysqli_query($conecta, "SELECT imagem FROM ee WHERE id = '$efeito_id';");
+				$usuario = mysqli_fetch_object($sql);
 				unlink("cartas/".$usuario->imagem."");
 				preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $foto["name"], $ext);
 	        	$nome_imagem = md5(uniqid(time())) . "." . $ext[1];
 	        	$caminho_imagem = "cartas/" . $nome_imagem;
 				move_uploaded_file($foto["tmp_name"], $caminho_imagem);
-				$sql = mysql_query("update ee set nome = '$efeito_nome', ganho = '$efeito_ganho', valor = '$efeito_valor', tip = '$efeito_tip', imagem = '$nome_imagem' where id = '$efeito_id';");
+				$sql = mysqli_query($conecta, "update ee set nome = '$efeito_nome', ganho = '$efeito_ganho', valor = '$efeito_valor', tip = '$efeito_tip', imagem = '$nome_imagem' where id = '$efeito_id';");
 
 				if ($sql){
 					echo "<script>alert('Efeito alterado com sucesso!'); window.location = 'index.php?admin'</script>";
@@ -311,7 +311,7 @@ if($row['adm'] == 1){
 	//////////////////////////////////////////////////////////cadastrar novo tipo
 	if(isset($_POST["cadastrar_tipo"])) { 
 		$tip_nome = $class->antisql($_POST["tip_nome"]); 
-		$sql = mysql_query("INSERT INTO tip(nome) VALUES ('$tip_nome');");
+		$sql = mysqli_query($conecta, "INSERT INTO tip(nome) VALUES ('$tip_nome');");
 		if ($sql){
 			echo "<script>alert('Novo tipo inserido com sucesso!'); window.location = 'index.php?admin'</script>";
 		}else{
@@ -332,7 +332,7 @@ if($row['adm'] == 1){
 	if(isset($_POST["alterar_tipo"])) { 
 		$tip_id = $class->antisql($_POST["tip_id"]);
 		$tip_nome = $class->antisql($_POST["tip_nome"]); 
-		$sql = mysql_query("update tip set nome = '$tip_nome' where id = '$tip_id';");
+		$sql = mysqli_query($conecta, "update tip set nome = '$tip_nome' where id = '$tip_id';");
 
 		if ($sql){
 			echo "<script>alert('Tipo alterado com sucesso!'); window.location = 'index.php?admin'</script>";
@@ -355,7 +355,7 @@ if($row['adm'] == 1){
 	//////////////////////////////////////////////////////////cadastrar novo estilo
 	if(isset($_POST["cadastrar_estilo"])) { 
 		$est_nome = $class->antisql($_POST["est_nome"]); 
-		$sql = mysql_query("INSERT INTO est_musical(nome) VALUES ('$est_nome');");
+		$sql = mysqli_query($conecta, "INSERT INTO est_musical(nome) VALUES ('$est_nome');");
 		if ($sql){
 			echo "<script>alert('Novo estilo inserido com sucesso!'); window.location = 'index.php?admin'</script>";
 		}else{
@@ -376,7 +376,7 @@ if($row['adm'] == 1){
 	if(isset($_POST["alterar_estilo"])) { 
 		$est_id = $class->antisql($_POST["est_id"]);
 		$est_nome = $class->antisql($_POST["est_nome"]); 
-		$sql = mysql_query("update est_musical set nome = '$est_nome' where id = '$est_id';");
+		$sql = mysqli_query($conecta, "update est_musical set nome = '$est_nome' where id = '$est_id';");
 
 		if ($sql){
 			echo "<script>alert('Estilo alterado com sucesso!'); window.location = 'index.php?admin'</script>";
@@ -401,7 +401,7 @@ if($row['adm'] == 1){
 		$art_nome = $class->antisql($_POST["art_nome"]); 
 		$art_descricao = $class->antisql($_POST["art_descricao"]); 
 		$art_est_musical = $class->antisql($_POST["art_est_musical"]); 
-		$sql = mysql_query("INSERT INTO artista(nome, descricao, est_musical) VALUES ('$art_nome', '$art_descricao', '$art_est_musical');");
+		$sql = mysqli_query($conecta, "INSERT INTO artista(nome, descricao, est_musical) VALUES ('$art_nome', '$art_descricao', '$art_est_musical');");
 		if ($sql){
 			echo "<script>alert('Novo artista inserido com sucesso!'); window.location = 'index.php?admin'</script>";
 		}else{
@@ -424,7 +424,7 @@ if($row['adm'] == 1){
 		$art_nome = $class->antisql($_POST["art_nome"]); 
 		$art_descricao = $class->antisql($_POST["art_descricao"]); 
 		$art_est_musical = $class->antisql($_POST["art_est_musical"]); 
-		$sql = mysql_query("update artista set nome = '$art_nome', descricao = '$art_descricao', est_musical = '$art_est_musical' where id = '$art_id';");
+		$sql = mysqli_query($conecta, "update artista set nome = '$art_nome', descricao = '$art_descricao', est_musical = '$art_est_musical' where id = '$art_id';");
 
 		if ($sql){
 			echo "<script>alert('Artista alterado com sucesso!'); window.location = 'index.php?admin'</script>";
@@ -516,8 +516,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Artista: </td>
 				<td><select name=\"carta_artista\">";
-					$csql = mysql_query("select * from artista");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from artista");
+					while($rsql = mysqli_fetch_array($csql)){
 						echo "<option value=\"" . $rsql['id'] . "\">" . $rsql['nome'] . "</option>";
 					}
 
@@ -528,8 +528,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Estilo Musical: </td>
 				<td><select name=\"carta_est_musical\">";
-					$csql = mysql_query("select * from est_musical");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from est_musical");
+					while($rsql = mysqli_fetch_array($csql)){
 						echo "<option value=\"" . $rsql['id'] . "\">" . $rsql['nome'] . "</option>";
 					}
 
@@ -556,8 +556,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Tipo: </td>
 				<td><select name=\"carta_tip\">";
-					$csql = mysql_query("select * from tip");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from tip");
+					while($rsql = mysqli_fetch_array($csql)){
 						echo "<option value=\"" . $rsql['id'] . "\">" . $rsql['nome'] . "</option>";
 					}
 
@@ -597,8 +597,8 @@ if($row['adm'] == 1){
 		echo"
 		<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			<span class=\"titulo\">ALTERAR CARTAS</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">";
-			$csql = mysql_query("SELECT * FROM cartas;");
-		 	while($rsql=mysql_fetch_array($csql)){
+			$csql = mysqli_query($conecta, "SELECT * FROM cartas;");
+		 	while($rsql=mysqli_fetch_array($csql)){
 		 		echo "
 		 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 		 			<a href=\"index.php?admin&i1=4&i2=" . $rsql['id'] . "\" class=\"linkus\">
@@ -622,8 +622,8 @@ if($row['adm'] == 1){
 
 
 	if($i1 == 4){
-		$csql_carta = mysql_query("select * from cartas where id = '$i2';");
-		$rsql_carta = mysql_fetch_array($csql_carta);
+		$csql_carta = mysqli_query($conecta, "select * from cartas where id = '$i2';");
+		$rsql_carta = mysqli_fetch_array($csql_carta);
 
 		echo"
 		<span class=\"titulo\">" . $rsql_carta['nome'] ."</span>
@@ -637,8 +637,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Artista: </td>
 				<td><select name=\"carta_artista\">";
-					$csql = mysql_query("select * from artista");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from artista");
+					while($rsql = mysqli_fetch_array($csql)){
 						if($rsql['id'] == $rsql_carta['artista']){
 							echo "<option value=\"" . $rsql['id'] . "\" selected>" . $rsql['nome'] . "</option>";
 						}else{
@@ -653,8 +653,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Estilo Musical: </td>
 				<td><select name=\"carta_est_musical\">";
-					$csql = mysql_query("select * from est_musical");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from est_musical");
+					while($rsql = mysqli_fetch_array($csql)){
 						if($rsql['id'] == $rsql_carta['est_musical']){
 							echo "<option value=\"" . $rsql['id'] . "\" selected>" . $rsql['nome'] . "</option>";
 						}else{
@@ -685,8 +685,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Tipo: </td>
 				<td><select name=\"carta_tip\">";
-					$csql = mysql_query("select * from tip");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from tip");
+					while($rsql = mysqli_fetch_array($csql)){
 						if($rsql['id'] == $rsql_carta['tip']){
 							echo "<option value=\"" . $rsql['id'] . "\" selected>" . $rsql['nome'] . "</option>";
 						}else{
@@ -751,8 +751,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Tipo: </td>
 				<td><select name=\"efeito_tip\">";
-					$csql = mysql_query("select * from tip");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from tip");
+					while($rsql = mysqli_fetch_array($csql)){
 						echo "<option value=\"" . $rsql['id'] . "\">" . $rsql['nome'] . "</option>";
 					}
 
@@ -788,8 +788,8 @@ if($row['adm'] == 1){
 		echo"
 		<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			<span class=\"titulo\">ALTERAR EFEITOS</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">";
-			$csql = mysql_query("SELECT * FROM ee;");
-		 	while($rsql=mysql_fetch_array($csql)){
+			$csql = mysqli_query($conecta, "SELECT * FROM ee;");
+		 	while($rsql=mysqli_fetch_array($csql)){
 		 		echo "
 		 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 		 			<a href=\"index.php?admin&i1=7&i2=" . $rsql['id'] . "\" class=\"linkus\">
@@ -813,8 +813,8 @@ if($row['adm'] == 1){
 
 
 	if($i1 == 7){
-		$csql_efeito = mysql_query("select * from ee where id = '$i2';");
-		$rsql_efeito = mysql_fetch_array($csql_efeito);
+		$csql_efeito = mysqli_query($conecta, "select * from ee where id = '$i2';");
+		$rsql_efeito = mysqli_fetch_array($csql_efeito);
 
 		echo"
 		<span class=\"titulo\">" . $rsql_efeito['nome'] ."</span>
@@ -836,8 +836,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Tipo: </td>
 				<td><select name=\"efeito_tip\">";
-					$csql = mysql_query("select * from tip");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from tip");
+					while($rsql = mysqli_fetch_array($csql)){
 						if($rsql['id'] == $rsql_efeito['tip']){
 							echo "<option value=\"" . $rsql['id'] . "\" selected>" . $rsql['nome'] . "</option>";
 						}else{
@@ -909,8 +909,8 @@ if($row['adm'] == 1){
 		echo"
 		<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			<span class=\"titulo\">ALTERAR TIPOS</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">";
-			$csql = mysql_query("SELECT * FROM tip;");
-		 	while($rsql=mysql_fetch_array($csql)){
+			$csql = mysqli_query($conecta, "SELECT * FROM tip;");
+		 	while($rsql=mysqli_fetch_array($csql)){
 		 		echo "
 		 			<a href=\"index.php?admin&i1=10&i2=" . $rsql['id'] . "\" class=\"linkus\">" . $rsql['nome'] . "</a><br>
 		 		";
@@ -929,8 +929,8 @@ if($row['adm'] == 1){
 
 
 	if($i1 == 10){
-		$csql_tip = mysql_query("select * from tip where id = '$i2';");
-		$rsql_tip = mysql_fetch_array($csql_tip);
+		$csql_tip = mysqli_query($conecta, "select * from tip where id = '$i2';");
+		$rsql_tip = mysqli_fetch_array($csql_tip);
 
 		echo"
 		<span class=\"titulo\">" . $rsql_tip['nome'] ."</span>
@@ -1001,8 +1001,8 @@ if($row['adm'] == 1){
 		echo"
 		<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			<span class=\"titulo\">ALTERAR ESTILO MUSICAL</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">";
-			$csql = mysql_query("SELECT * FROM est_musical;");
-		 	while($rsql=mysql_fetch_array($csql)){
+			$csql = mysqli_query($conecta, "SELECT * FROM est_musical;");
+		 	while($rsql=mysqli_fetch_array($csql)){
 		 		echo "
 		 			<a href=\"index.php?admin&i1=13&i2=" . $rsql['id'] . "\" class=\"linkus\">" . $rsql['nome'] . "</a><br>
 		 		";
@@ -1021,8 +1021,8 @@ if($row['adm'] == 1){
 
 
 	if($i1 == 13){
-		$csql_est = mysql_query("select * from est_musical where id = '$i2';");
-		$rsql_est = mysql_fetch_array($csql_est);
+		$csql_est = mysqli_query($conecta, "select * from est_musical where id = '$i2';");
+		$rsql_est = mysqli_fetch_array($csql_est);
 
 		echo"
 		<span class=\"titulo\">" . $rsql_est['nome'] ."</span>
@@ -1080,8 +1080,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Estilo Musical: </td>
 				<td><select name=\"art_est_musical\">";
-					$csql = mysql_query("select * from est_musical");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from est_musical");
+					while($rsql = mysqli_fetch_array($csql)){
 						echo "<option value=\"" . $rsql['id'] . "\">" . $rsql['nome'] . "</option>";
 					}
 
@@ -1113,8 +1113,8 @@ if($row['adm'] == 1){
 		echo"
 		<div id=\"item\" style=\"margin-top: 6px; background: #ffffff; padding: 10px;\">
 			<span class=\"titulo\">ALTERAR ARTISTA</span><hr size=\"1\" width=\"100%\" color=\"#cccccc\">";
-			$csql = mysql_query("SELECT * FROM artista;");
-		 	while($rsql=mysql_fetch_array($csql)){
+			$csql = mysqli_query($conecta, "SELECT * FROM artista;");
+		 	while($rsql=mysqli_fetch_array($csql)){
 		 		echo "
 		 			<a href=\"index.php?admin&i1=16&i2=" . $rsql['id'] . "\" class=\"linkus\">" . $rsql['nome'] . "</a><br>
 		 		";
@@ -1133,8 +1133,8 @@ if($row['adm'] == 1){
 
 
 	if($i1 == 16){
-		$csql_art = mysql_query("select * from artista where id = '$i2';");
-		$rsql_art = mysql_fetch_array($csql_art);
+		$csql_art = mysqli_query($conecta, "select * from artista where id = '$i2';");
+		$rsql_art = mysqli_fetch_array($csql_art);
 
 		echo"
 		<span class=\"titulo\">" . $rsql_art['nome'] ."</span>
@@ -1152,8 +1152,8 @@ if($row['adm'] == 1){
 			<tr>
 				<td>Estilo Musical: </td>
 				<td><select name=\"art_est_musical\">";
-					$csql = mysql_query("select * from est_musical");
-					while($rsql = mysql_fetch_array($csql)){
+					$csql = mysqli_query($conecta, "select * from est_musical");
+					while($rsql = mysqli_fetch_array($csql)){
 						if($rsql['id'] == $rsql_art['est_musical']){
 							echo "<option value=\"" . $rsql['id'] . "\" selected>" . $rsql['nome'] . "</option>";
 						}else{

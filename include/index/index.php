@@ -4,7 +4,7 @@
 if(isset($_POST["addcarta"])) {
 		$tipo = $class->antisql($_POST["tip"]);
 		$carta = $class->antisql($_POST["carta"]);
-			$insert = mysql_query("update user_cartas set tipo = '$tipo' where id = '$carta';") or die(mysql_error());		
+			$insert = mysqli_query($conecta, "update user_cartas set tipo = '$tipo' where id = '$carta';") or die(mysqli_error());		
 			if($insert) {				
 				echo "<script>alert('OK!');window.location='index.php?index'</script>";
 		}	
@@ -14,13 +14,13 @@ if(isset($_POST["addcarta"])) {
 
 //////////////////////////////////////////////////////////////comprar efeito
 if($p1 == 1){
-	$csql = mysql_query("select * from ee where id = '$p2'");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from ee where id = '$p2'");
+	$rsql = mysqli_fetch_array($csql);
 	if($row['cash'] >= $rsql['valor']){
 		$cash = $row['cash'] - $rsql['valor'];
 		$iduser = $row['id'];
-		$insert = mysql_query("INSERT INTO user_ee VALUES (NULL, '$iduser', '$p2');");
-		$insert = mysql_query("update user set cash = '$cash' where id = '$iduser';");
+		$insert = mysqli_query($conecta, "INSERT INTO user_ee VALUES (NULL, '$iduser', '$p2');");
+		$insert = mysqli_query($conecta, "update user set cash = '$cash' where id = '$iduser';");
 		if($insert){
 			echo "<script>alert('OK!');window.location='index.php?index&i1=2'</script>";
 		}else{
@@ -33,14 +33,14 @@ if($p1 == 1){
 
 //////////////////////////////////////////////////////////////vender efeito
 if($p1 == 2){
-	$csql = mysql_query("select * from user_ee where id = '$p2'");
-	$rsql = mysql_fetch_array($csql);
-	$csql1 = mysql_query("select * from ee where id = '$rsql[ee]'");
-	$rsql1 = mysql_fetch_array($csql1);
+	$csql = mysqli_query($conecta, "select * from user_ee where id = '$p2'");
+	$rsql = mysqli_fetch_array($csql);
+	$csql1 = mysqli_query($conecta, "select * from ee where id = '$rsql[ee]'");
+	$rsql1 = mysqli_fetch_array($csql1);
 	$cash = $row['cash'] + ($rsql1['valor'] * 0.6);
 	$iduser = $row['id'];
-	$insert = mysql_query("DELETE FROM user_ee WHERE id = '$p2';");
-	$insert = mysql_query("update user set cash = '$cash' where id = '$iduser';");
+	$insert = mysqli_query($conecta, "DELETE FROM user_ee WHERE id = '$p2';");
+	$insert = mysqli_query($conecta, "update user set cash = '$cash' where id = '$iduser';");
 	if($insert){
 		echo "<script>alert('OK!');window.location='index.php?index&i1=2'</script>";
 	}else{
@@ -57,13 +57,13 @@ if($p1 == 2){
 
 //////////////////////////////////////////////////////////////comprar carta
 if($p1 == 3){
-	$csql = mysql_query("select * from cartas where id = '$p2'");
-	$rsql = mysql_fetch_array($csql);
+	$csql = mysqli_query($conecta, "select * from cartas where id = '$p2'");
+	$rsql = mysqli_fetch_array($csql);
 	if($row['cash'] >= $rsql['valor']){
 		$cash = $row['cash'] - $rsql['valor'];
 		$iduser = $row['id'];
-		$insert = mysql_query("INSERT INTO user_cartas VALUES (NULL, '$iduser', '$p2', null);");
-		$insert = mysql_query("update user set cash = '$cash' where id = '$iduser';");
+		$insert = mysqli_query($conecta, "INSERT INTO user_cartas VALUES (NULL, '$iduser', '$p2', null);");
+		$insert = mysqli_query($conecta, "update user set cash = '$cash' where id = '$iduser';");
 		if($insert){
 			echo "<script>alert('OK!');window.location='index.php?book'</script>";
 		}else{
@@ -76,14 +76,14 @@ if($p1 == 3){
 
 //////////////////////////////////////////////////////////////vender carta
 if($p1 == 4){
-	$csql = mysql_query("select * from user_cartas where id = '$p2'");
-	$rsql = mysql_fetch_array($csql);
-	$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]'");
-	$rsql1 = mysql_fetch_array($csql1);
+	$csql = mysqli_query($conecta, "select * from user_cartas where id = '$p2'");
+	$rsql = mysqli_fetch_array($csql);
+	$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]'");
+	$rsql1 = mysqli_fetch_array($csql1);
 	$cash = $row['cash'] + ($rsql1['valor'] * 0.6);
 	$iduser = $row['id'];
-	$insert = mysql_query("DELETE FROM user_cartas WHERE id = '$p2';");
-	$insert = mysql_query("update user set cash = '$cash' where id = '$iduser';");
+	$insert = mysqli_query($conecta, "DELETE FROM user_cartas WHERE id = '$p2';");
+	$insert = mysqli_query($conecta, "update user set cash = '$cash' where id = '$iduser';");
 	if($insert){
 		echo "<script>alert('OK!');window.location='index.php?index'</script>";
 	}else{
@@ -115,11 +115,11 @@ echo "
 
 
 
-		$csql = mysql_query("SELECT * FROM user_cartas where deid = '$id' and tipo = '1';");
-	 	while($rsql=mysql_fetch_array($csql)){
+		$csql = mysqli_query($conecta, "SELECT * FROM user_cartas where deid = '$id' and tipo = '1';");
+	 	while($rsql=mysqli_fetch_array($csql)){
 	 		$cont++;
-	 		$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-	 		$rsql1 = mysql_fetch_array($csql1);
+	 		$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+	 		$rsql1 = mysqli_fetch_array($csql1);
 	 		echo "
 	 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 	 			<a href=\"#pfdialog\" name=\"pfmodal\" class=\"linkus\" onclick=\"CarregaDadosJanela('" . $rsql['id'] . "','carta');\">
@@ -147,11 +147,11 @@ echo "
 
 
 		$cont = 0;
-		$csql = mysql_query("SELECT * FROM user_cartas where deid = '$id' and tipo = '2';");
-	 	while($rsql=mysql_fetch_array($csql)){
+		$csql = mysqli_query($conecta, "SELECT * FROM user_cartas where deid = '$id' and tipo = '2';");
+	 	while($rsql=mysqli_fetch_array($csql)){
 	 		$cont++;
-	 		$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-	 		$rsql1 = mysql_fetch_array($csql1);
+	 		$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+	 		$rsql1 = mysqli_fetch_array($csql1);
 	 		echo "
 	 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 	 			<a href=\"#pfdialog\" name=\"pfmodal\" class=\"linkus\" onclick=\"CarregaDadosJanela('" . $rsql['id'] . "','carta');\">
@@ -179,11 +179,11 @@ echo "
 
 
 		$cont = 0;
-		$csql = mysql_query("SELECT * FROM user_cartas where deid = '$id' and tipo = '3';");
-	 	while($rsql=mysql_fetch_array($csql)){
+		$csql = mysqli_query($conecta, "SELECT * FROM user_cartas where deid = '$id' and tipo = '3';");
+	 	while($rsql=mysqli_fetch_array($csql)){
 	 		$cont++;
-	 		$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-	 		$rsql1 = mysql_fetch_array($csql1);
+	 		$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+	 		$rsql1 = mysqli_fetch_array($csql1);
 	 		echo "
 	 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 	 			<a href=\"#pfdialog\" name=\"pfmodal\" class=\"linkus\" onclick=\"CarregaDadosJanela('" . $rsql['id'] . "','carta');\">
@@ -211,10 +211,10 @@ echo "
 
 
 
-		$csql = mysql_query("SELECT * FROM user_ee where deid = '$id';");
-	 	while($rsql=mysql_fetch_array($csql)){
-	 		$csql1 = mysql_query("select * from ee where id = '$rsql[ee]';");
-	 		$rsql1 = mysql_fetch_array($csql1);
+		$csql = mysqli_query($conecta, "SELECT * FROM user_ee where deid = '$id';");
+	 	while($rsql=mysqli_fetch_array($csql)){
+	 		$csql1 = mysqli_query($conecta, "select * from ee where id = '$rsql[ee]';");
+	 		$rsql1 = mysqli_fetch_array($csql1);
 	 		echo "
 	 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 	 			<a href=\"#pfdialog\" name=\"pfmodal\" class=\"linkus\" onclick=\"CarregaDadosJanela('" . $rsql['id'] . "','ee');\">
@@ -241,11 +241,11 @@ echo "
 
 
 		$cont = 0;
-		$csql = mysql_query("SELECT * FROM user_cartas where deid = '$id';");
-	 	while($rsql=mysql_fetch_array($csql)){
+		$csql = mysqli_query($conecta, "SELECT * FROM user_cartas where deid = '$id';");
+	 	while($rsql=mysqli_fetch_array($csql)){
 	 		$cont++;
-	 		$csql1 = mysql_query("select * from cartas where id = '$rsql[carta]';");
-	 		$rsql1 = mysql_fetch_array($csql1);
+	 		$csql1 = mysqli_query($conecta, "select * from cartas where id = '$rsql[carta]';");
+	 		$rsql1 = mysqli_fetch_array($csql1);
 	 		echo "
 	 		<div id=\"item\" style=\"width: 143px; float: left; margin: 2px; text-align: justify; padding: 5px;\" align=\"left\">
 	 			<a href=\"#pfdialog\" name=\"pfmodal\" class=\"linkus\" onclick=\"CarregaDadosJanela('" . $rsql['id'] . "','carta');\">
@@ -322,8 +322,8 @@ if($i1 == 2){
 
 
 
-		$csql = mysql_query("SELECT * FROM ee;");
-	 	while($rsql=mysql_fetch_array($csql)){
+		$csql = mysqli_query($conecta, "SELECT * FROM ee;");
+	 	while($rsql=mysqli_fetch_array($csql)){
 	 		$cont++;
 
 	 		echo "

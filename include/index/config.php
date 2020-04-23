@@ -3,7 +3,7 @@
 if(isset($_POST["cadastrar"])) { 
 	if(!empty($_POST["epp"])) { 
 		$epp = $class->antisql($_POST["epp"]); 
-		$insert = mysql_query("update user set epp = '$epp' where id = '$id';") or die(mysql_error()); 
+		$insert = mysqli_query($conecta, "update user set epp = '$epp' where id = '$id';") or die(mysqli_error()); 
 		if($insert) {
 			echo "<script>alert('Salvo!');window.location='index.php?config'</script>";
 		}else{
@@ -27,7 +27,7 @@ if(isset($_POST["alterar_senha"])) {
 		$nova_senha1 = md5($class->antisql($_POST["nova_senha1"])); 
 		if($senha_atual == $row['senha']){
 			if($nova_senha == $nova_senha1){
-				$insert = mysql_query("update user set senha = '$nova_senha' where id = '$id';") or die(mysql_error()); 
+				$insert = mysqli_query($conecta, "update user set senha = '$nova_senha' where id = '$id';") or die(mysqli_error()); 
 				if($insert) {
 					echo "<script>alert('Salvo!');window.location='sair.php'</script>";
 				}else{
@@ -58,21 +58,21 @@ if(isset($_POST["excluir_conta"])) {
 		if($senha_atual == $row['senha']){
 			unlink("fotos/". $row['foto'] ."");
 			unlink("fotos/min/". $row['foto'] ."");
-			$insert = mysql_query("DELETE FROM user_cartas WHERE deid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM user_ee WHERE deid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM rmsg WHERE deid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM rmsg WHERE idpert = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM repost WHERE id_us = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM post WHERE id_us = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM perfil WHERE id = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM msg WHERE deid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM msg WHERE paraid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM links WHERE id_us = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM gostar WHERE id_us = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM contato WHERE deid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM contato WHERE cotid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM batalhas WHERE deid = '$id';") or die(mysql_error()); 
-			$insert = mysql_query("DELETE FROM user WHERE id = '$id';") or die(mysql_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM user_cartas WHERE deid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM user_ee WHERE deid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM rmsg WHERE deid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM rmsg WHERE idpert = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM repost WHERE id_us = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM post WHERE id_us = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM perfil WHERE id = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM msg WHERE deid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM msg WHERE paraid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM links WHERE id_us = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM gostar WHERE id_us = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM contato WHERE deid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM contato WHERE cotid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM batalhas WHERE deid = '$id';") or die(mysqli_error()); 
+			$insert = mysqli_query($conecta, "DELETE FROM user WHERE id = '$id';") or die(mysqli_error()); 
 			if($insert) {
 				echo "<script>alert('Sua conta foi apagada!');window.location='sair.php'</script>";
 			}else{

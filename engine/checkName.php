@@ -1,9 +1,9 @@
 <?php
 include("conexao.php");
 		   
-$repeat_user = mysql_query("SELECT * FROM user WHERE login='$_REQUEST[username]'") or die($mensagem_erro = "Houve um erro:<br />".mysql_error()); // FaÁo a consulta ao SQL para verificar se n„o h· usu·rios com o mesmo login name
+$repeat_user = mysqli_query($conecta, "SELECT * FROM user WHERE login='$_REQUEST[username]'") or die($mensagem_erro = "Houve um erro:<br />".mysqli_error()); // Fa√ßo a consulta ao SQL para verificar se n√£o h√° usu√°rios com o mesmo login name
 		
-if(mysql_num_rows($repeat_user) == 0) {
+if(mysqli_num_rows($repeat_user) == 0) {
 
 	echo 'okay';
 } else {

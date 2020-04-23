@@ -5,9 +5,9 @@ echo"
 	<div align=\"right\">
 	<a href=\"#gostou" . $e . "\" name=\"fechamenu\" class=\"classe4\"><img src=\"engine/imgs/cancela.png\"></a>
 	</div>";
-	while($rrlike = mysql_fetch_array($like)){
-		$csqlrlk = mysql_query("select * from user where id = '$rrlike[id_us]'");
-		$rsqlrlk = mysql_fetch_array($csqlrlk);
+	while($rrlike = mysqli_fetch_array($like)){
+		$csqlrlk = mysqli_query($conecta, "select * from user where id = '$rrlike[id_us]'");
+		$rsqlrlk = mysqli_fetch_array($csqlrlk);
 		$datatempo5 = explode(" ", $rrlike['data']);
 		$dat5 = explode("-", $datatempo5[0]);
 		echo "
@@ -28,9 +28,9 @@ echo"
 	<div align=\"right\">
 	<a href=\"#ngostou" . $e . "\" name=\"fechamenu\" class=\"classe4\"><img src=\"engine/imgs/cancela.png\"></a>
 	</div>";
-	while($rrnlike = mysql_fetch_array($nlike)){
-		$csqlrnlk = mysql_query("select * from user where id = '$rrnlike[id_us]'");
-		$rsqlrnlk = mysql_fetch_array($csqlrnlk);
+	while($rrnlike = mysqli_fetch_array($nlike)){
+		$csqlrnlk = mysqli_query($conecta, "select * from user where id = '$rrnlike[id_us]'");
+		$rsqlrnlk = mysqli_fetch_array($csqlrnlk);
 		$datatempo6 = explode(" ", $rrnlike['data']);
 		$dat6 = explode("-", $datatempo6[0]);
 		echo "

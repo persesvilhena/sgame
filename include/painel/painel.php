@@ -14,9 +14,9 @@
 		<a href="index.php?perfil" class="menu" target="_top"><img src="engine/imgs/user.png" align="left">Perfil</a><br>
 		<a href="index.php?msg&i1=1" class="menu" target="_top"><img src="engine/imgs/mail.png" align="left">Mensagens
 		<?php
-		$cmensagem = mysql_query("select * from msg where (deid = '$id' or paraid='$id') and nw = '1' and nwus <> '$id'");
+		$cmensagem = mysqli_query($conecta, "select * from msg where (deid = '$id' or paraid='$id') and nw = '1' and nwus <> '$id'");
 		$cont = 0;
-		while($rmensagem = mysql_fetch_array($cmensagem)){
+		while($rmensagem = mysqli_fetch_array($cmensagem)){
 			$cont = $cont + 1;
 		}
 		if ($cont != 0){
@@ -44,8 +44,8 @@
 		<hr size="1" width="182" color="#cccccc">
 		<a href="index.php?links" class="menu" target="_top"><img src="engine/imgs/globo.png" align="left">Home</a><br>
 		<?php
-		$res2 = mysql_query("SELECT * FROM links where id_us = '$id'");
- 		while($escrever2=mysql_fetch_array($res2)){
+		$res2 = mysqli_query($conecta, "SELECT * FROM links where id_us = '$id'");
+ 		while($escrever2=mysqli_fetch_array($res2)){
  			echo "<a href=\"http://" . $escrever2['link'] . "\" class=\"menu\" target=\"_blank\"><img src=\"engine/imgs/direita.png\" align=\"left\">" . $escrever2['nome'] . "</a>";
 		}
 		?>
